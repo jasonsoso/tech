@@ -4,10 +4,10 @@
     <title>Jason</title>
     <description>自强不息 codeing不止
 </description>
-    <link>http://www.jasonsoso.com/</link>
-    <atom:link href="http://www.jasonsoso.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 26 Oct 2014 11:20:19 +0800</pubDate>
-    <lastBuildDate>Sun, 26 Oct 2014 11:20:19 +0800</lastBuildDate>
+    <link>http://www.jasonsoso.com/tech/</link>
+    <atom:link href="http://www.jasonsoso.com/tech/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sun, 26 Oct 2014 16:03:45 +0800</pubDate>
+    <lastBuildDate>Sun, 26 Oct 2014 16:03:45 +0800</lastBuildDate>
     <generator>Jekyll v2.4.0</generator>
     
       <item>
@@ -28,8 +28,8 @@
 
 </description>
         <pubDate>Mon, 20 Oct 2014 02:50:50 +0800</pubDate>
-        <link>http://www.jasonsoso.com/jekyll/update/2014/10/20/welcome-to-jekyll.html</link>
-        <guid isPermaLink="true">http://www.jasonsoso.com/jekyll/update/2014/10/20/welcome-to-jekyll.html</guid>
+        <link>http://www.jasonsoso.com/tech/jekyll/update/2014/10/20/welcome-to-jekyll.html</link>
+        <guid isPermaLink="true">http://www.jasonsoso.com/tech/jekyll/update/2014/10/20/welcome-to-jekyll.html</guid>
         
         
         <category>jekyll</category>
