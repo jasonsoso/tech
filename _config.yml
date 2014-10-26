@@ -3,8 +3,8 @@ title: Jason
 email: 648636045@qq.com
 description: > # this means to ignore newlines until "baseurl:"
   自强不息 codeing不止
-baseurl: "/tech" # the subpath of your site, e.g. /blog/
-url: "http://www.jasonsoso.com" # the base hostname & protocol for your site
+#baseurl: "/tech" # the subpath of your site, e.g. /blog/
+url: "http://www.jasonsoso.com/tech" # the base hostname & protocol for your site
 twitter_username: 
 github_username:  jasonsoso
 
