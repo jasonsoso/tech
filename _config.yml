@@ -1,0 +1,37 @@
+# Dependencies
+markdown:         kramdown
+kramdown:
+  input:          GFM
+gems:
+                  - jekyll-sitemap
+
+# Permalinks
+permalink:        /:year:month/:title
+
+# Setup
+title:            如是我聞
+tagline:          "iOS 空手道 自行車 足球"
+description:      '@jasonsoso，關注iOS，空手道，自行車以及足球。'
+baseurl:          /tech
+url:              http://ztpala.com
+domain:           http://www.jasonsoso.com
+email:            648636045@qq.com
+#twitter_username: ztpala
+github_username:  jasonsoso
+timezone:         America/New_York
+subscribe:        http://www.jasonsoso.com/tech/atom.xml
+exclude:          [ README.md, newpost.rb, CNAME ]
+
+collections:
+  dev:
+    output:       true
+    permalink:    /notes/:collection/:path/
+
+author:
+  name:           'Tao Zhang'
+  url:            https://twitter.com/ztpala
+
+paginate:         5
+
+github:
+  repo:           https://github.com/pala/pala.github.io
