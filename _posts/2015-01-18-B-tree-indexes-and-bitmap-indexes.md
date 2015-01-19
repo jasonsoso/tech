@@ -1,7 +1,6 @@
 ---
 layout: post
 title: B树索引与位图索引
-categories: 相冊
 tags:
     - 数据结构
     - B树
