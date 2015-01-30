@@ -20,7 +20,7 @@ tags:
 大量的数据库（如MySQL、oracle、PostgreSQL等）都在使用B树。B树索引本质上是对索引字段进行排序，然后通过类似二分查找的方法进行快速查找，即它要求索引的字段是可排序的，一般而言，可排序的是一维字段，比如时间、身份证号码  手机号码、QQ等等。
 
 **数据结构**：
-![](http://dl2.iteye.com/upload/attachment/0087/6359/1ef3a7d9-ecb9-35bc-8ca0-8ad9be186206.jpg)
+![](http://7u2ivm.com1.z0.glb.clouddn.com/b.jpg)
 
 **特点**： 	
 1. 索引不存储null值，单一索引不存储null值，复合索引不存储全为null的值；  
