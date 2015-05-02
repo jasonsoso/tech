@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 筆記
+title: 笔记
 permalink: /notes/
 ---
 
