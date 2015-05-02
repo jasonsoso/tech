@@ -10,8 +10,8 @@ permalink:        /:year:month/:title
 
 # Setup
 title:            Jason技术流水账
-tagline:          "iOS 空手道 自行車 足球"
-description:      '@Jason,A programmer, A web technology enthusiast。'
+tagline:          "Java程序猿 2B青年 技术分享"
+description:      '@Jason,Java程序猿,2B青年,技术分享.'
 baseurl:          /tech
 url:              http://www.jasonsoso.com
 domain:           jasonsoso.com
