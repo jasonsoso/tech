@@ -8,7 +8,9 @@ tags:
 ---
 
 ## 环境 ##
+
 #### 准备Ubuntu 14.04 LTS  并更新apt ####
+
 1. 执行`sudo apt-get update`	
 2. 可更改数据源进行update 
 
@@ -18,15 +20,16 @@ tags:
 
 1. 编辑interfaces文件	
 `sudo vi /etc/network/interfaces`   
-2. 写入如下:	
-`auto eth0	
-iface eth0 inet static	
-address 192.168.1.100 	#IP地址		
-gateway 192.168.1.1 	#网关		
-netmask 255.255.255.0	
-network 192.168.1.0	
-broadcast 192.168.1.255		
-`	
+2. 写入如下:
+
+		auto eth0
+		iface eth0 inet static
+		address 192.168.1.100 	#IP地址		
+		gateway 192.168.1.1 	#网关	
+		netmask 255.255.255.0
+		network 192.168.1.0	
+		broadcast 192.168.1.255
+	
 
 #### 修改HostName ####
 1. 编辑hostname文件
@@ -64,10 +67,10 @@ broadcast 192.168.1.255
 2. 登陆本机		
 `ssh localhost`		
 3. 配置SSH无密码登陆	
-`sudo ssh-keygen -t rsa		# 生成密钥	
-sudo ssh-copy-id ubuntu@localhost	# 拷贝密钥到某台机器		
-sudo ssh localhost	#进行无密码登陆	
-`
+
+		sudo ssh-keygen -t rsa		# 生成密钥	
+		sudo ssh-copy-id ubuntu@localhost	# 拷贝密钥到某台机器		
+		sudo ssh localhost	#进行无密码登陆	
 
 
 ## hadoop2.6.0安装 ##
@@ -81,44 +84,47 @@ sudo ssh localhost	#进行无密码登陆
 
 ## 配置 ##
 1. 配置环境变量	
-下面`#set Hadoop`才是真正的hadoop配置，而`#set java environment`是必须的java环境变量，`#set findbugs`、`#set ant`、`#PROTOBUF`和`#set maven environment`是编译hadoop代码必须的，现在没有编译hadoop源码，只需要java环境和hadoop环境足矣。		 		
+下面`#set Hadoop`才是真正的hadoop配置，而`#set java environment`是必须的java环境变量，`#set findbugs`、`#set ant`、`#PROTOBUF`和`#set maven environment`是编译hadoop代码必须的，现在没有编译hadoop源码，只需要java环境和hadoop环境足矣。
+		 		
 执行`sudo vi /etc/profile`修改profile文件			
-添加如下：	
-- `#set java environment	
-JAVA_HOME=/usr/java/jdk1.7.0_60		
-export JRE_HOME=/usr/java/jdk1.7.0_60/jre		
-export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH	
-export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH		`	
+添加如下：
 
-- `#set findbugs	
-export LD_LIBRARY_PATH=/usr/local/lib/		
-export FINDBUGS_HOME=/usr/local/findbugs-3.0.0		
-export PATH=$PATH:$FINDBUGS_HOME/bin	`	
+		#set java environment
+		JAVA_HOME=/usr/java/jdk1.7.0_60
+		export JRE_HOME=/usr/java/jdk1.7.0_60/jre
+		export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH
+		export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
 
-- `#set ant	
-ANT_HOME=/usr/local/apache-ant-1.9.4	
-export PATH=$PATH:$ANT_HOME/bin	`	
 
-- `#PROTOBUF	
-export PROTOC_HOME=/usr/local/protobuf-2.5.0	
-export PATH=$PATH:$PROTOC_HOME/bin	
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PROTOC_HOME/lib`	
+		#set findbugs
+		export LD_LIBRARY_PATH=/usr/local/lib/
+		export FINDBUGS_HOME=/usr/local/findbugs-3.0.0
+		export PATH=$PATH:$FINDBUGS_HOME/bin
+
+		#set ant
+		ANT_HOME=/usr/local/apache-ant-1.9.4
+		export PATH=$PATH:$ANT_HOME/bin
+
+		#PROTOBUF
+		export PROTOC_HOME=/usr/local/protobuf-2.5.0
+		export PATH=$PATH:$PROTOC_HOME/bin
+		export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PROTOC_HOME/lib`
 	
-- `#set maven environment		
-M2_HOME=/usr/maven/apache-maven-3.0.5	
-export MAVEN_OPTS="-Xms256m -Xmx512m"	
-export PATH=$M2_HOME/bin:$PATH	`	
+		#set maven environment
+		M2_HOME=/usr/maven/apache-maven-3.0.5
+		export MAVEN_OPTS="-Xms256m -Xmx512m"
+		export PATH=$M2_HOME/bin:$PATH
 
-- ` #set Hadoop		
-export HADOOP_HOME=/opt/hadoop/hadoop-2.6.0		
-export HADOOP_INSTALL=$HADOOP_HOME	
-export HADOOP_MAPRED_HOME=$HADOOP_HOME	
-export HADOOP_COMMON_HOME=$HADOOP_HOME	
-export HADOOP_HDFS_HOME=$HADOOP_HOME	
-export HADOOP_YARN_HOME=$HADOOP_HOME	
-export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native	
-export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin	
-`
+		#set Hadoop
+		export HADOOP_HOME=/opt/hadoop/hadoop-2.6.0
+		export HADOOP_INSTALL=$HADOOP_HOME
+		export HADOOP_MAPRED_HOME=$HADOOP_HOME
+		export HADOOP_COMMON_HOME=$HADOOP_HOME
+		export HADOOP_HDFS_HOME=$HADOOP_HOME
+		export HADOOP_YARN_HOME=$HADOOP_HOME
+		export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+		export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+
 
 
 2. hadoop-env.sh
