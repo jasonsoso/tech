@@ -16,12 +16,13 @@ tags:
 
 
 #### 设置静态IP地址 ####
-必须设子静态IP，为以后的集群，分布式，HA等做铺垫	
+必须设置静态IP，为以后的集群，分布式等做铺垫	
 
 1. 编辑interfaces文件	
 `sudo vi /etc/network/interfaces`   
 2. 写入如下:
 
+		#如果做集群，则192.168.1.100此IP为主节点
 		auto eth0
 		iface eth0 inet static
 		address 192.168.1.100 	#IP地址		
@@ -30,6 +31,15 @@ tags:
 		network 192.168.1.0	
 		broadcast 192.168.1.255
 	
+		#如果做集群，则192.168.1.101此IP为从节点
+		auto eth0
+		iface eth0 inet static
+		address 192.168.1.101 	#IP地址		
+		gateway 192.168.1.1 	#网关	
+		netmask 255.255.255.0
+		network 192.168.1.0	
+		broadcast 192.168.1.255
+
 
 #### 修改HostName ####
 1. 编辑hostname文件
@@ -40,9 +50,15 @@ tags:
 
 #### IP与HostName绑定 ####
 1. 执行`sudo vi /etc/hosts`	
-2. 写入如下：	
-`192.168.1.100 hadoop-yarn.jasonsoso.com hadoop-yarn`	
-3. 那么访问‘hadoop-yarn.jasonsoso.com’则访问IP为‘192.168.1.100’的机器
+2. 写入如下：
+
+		#如果做集群，则192.168.1.101此IP为从节点
+		192.168.1.100 hadoop-yarn.jasonsoso.com hadoop-yarn master
+
+		#如果做集群，则192.168.1.101此IP为从节点
+		192.168.1.101 slave1.jasonsoso.com slave1
+
+3. 那么访问`hadoop-yarn.jasonsoso.com`则访问IP为`192.168.1.100`的机器
 
 
 #### 创建hadoop系统用户 ####
@@ -71,6 +87,8 @@ tags:
 		sudo ssh-keygen -t rsa		# 生成密钥	
 		sudo ssh-copy-id ubuntu@localhost	# 拷贝密钥到某台机器		
 		sudo ssh localhost	#进行无密码登陆	
+
+4. 如果做集群，则配置SSH无密码登陆，实现多机器互通
 
 
 ## hadoop2.6.0安装 ##
@@ -237,7 +255,20 @@ tags:
 
 
 
+## 本文配置主要是为伪布式，那么Hadoop 集群的安装配置大致为如下: ##
 
+1. 选定一台机器作为 Master 主节点
+2. 在 Master 主机上配置hadoop用户、安装SSH server、安装Java环境
+3. 在 Master 主机上安装Hadoop，并完成配置
+4. 在其他主机上配置hadoop用户、安装SSH server、安装Java环境
+5. 将 Master 主机上的Hadoop目录复制到其他主机上
+6. 开启、使用 Hadoop
+
+7.  需要特别注意的是:
+	
+	- 网络配置hosts
+	- SSH无密码登陆各节点
+	- 部分配置
 
 
 
