@@ -12,7 +12,7 @@ permalink:        /:year:month/:title
 title:            Jason技术流水账
 tagline:          "Java程序猿 2B青年 技术分享"
 description:      '@Jason,Java程序猿,2B青年,技术分享.'
-baseurl:          /tech
+baseurl:          ""
 url:              http://www.jasonsoso.com
 domain:           jasonsoso.com
 email:            648636045@qq.com

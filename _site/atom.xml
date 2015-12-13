@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Jason技术流水账</title>
+ <link href="http://www.jasonsoso.com/atom.xml" rel="self"/>
+ <link href="http://www.jasonsoso.com/"/>
+ <updated>2015-12-13T08:28:01+08:00</updated>
+ <id>http://www.jasonsoso.com</id>
+ <author>
+   <name>Jason</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Hadoop学习（一）Hadoop2.6.0伪分布式安装与配置</title>
+   <link href="http://www.jasonsoso.com/201505/install-hadoop"/>
+   <updated>2015-05-03T00:00:00+08:00</updated>
+   <id>http://www.jasonsoso.com/201505/install-hadoop</id>
+   <content type="html">&lt;h2 id=&quot;section&quot;&gt;环境&lt;/h2&gt;
+
+&lt;h4 id=&quot;ubuntu-1404-lts--apt&quot;&gt;准备Ubuntu 14.04 LTS  并更新apt&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;执行&lt;code&gt;sudo apt-get update&lt;/code&gt;	&lt;/li&gt;
+  &lt;li&gt;可更改数据源进行update &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;ip&quot;&gt;设置静态IP地址&lt;/h4&gt;
+&lt;p&gt;必须设置静态IP，为以后的集群，分布式等做铺垫	&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;编辑interfaces文件	
+&lt;code&gt;sudo vi /etc/network/interfaces&lt;/code&gt;   &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;写入如下:&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #如果做集群，则192.168.1.100此IP为主节点
+ auto eth0
+ iface eth0 inet static
+ address 192.168.1.100 	#IP地址		
+ gateway 192.168.1.1 	#网关	
+ netmask 255.255.255.0
+ network 192.168.1.0	
+ broadcast 192.168.1.255
+
+ #如果做集群，则192.168.1.101此IP为从节点
+ auto eth0
+ iface eth0 inet static
+ address 192.168.1.101 	#IP地址		
+ gateway 192.168.1.1 	#网关	
+ netmask 255.255.255.0
+ network 192.168.1.0	
+ broadcast 192.168.1.255
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;hostname&quot;&gt;修改HostName&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;编辑hostname文件
+&lt;code&gt;sudo vi /etc/hostname &lt;/code&gt;	&lt;/li&gt;
+  &lt;li&gt;写入&lt;code&gt;ubuntu&lt;/code&gt;		&lt;/li&gt;
+  &lt;li&gt;那么ubuntu就是本机器的主机名，可以&lt;code&gt;hostname&lt;/code&gt;进行查看&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;iphostname&quot;&gt;IP与HostName绑定&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;执行&lt;code&gt;sudo vi /etc/hosts&lt;/code&gt;	&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;写入如下：&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; #如果做集群，则192.168.1.101此IP为从节点
+ 192.168.1.100 hadoop-yarn.jasonsoso.com hadoop-yarn master
+
+ #如果做集群，则192.168.1.101此IP为从节点
+ 192.168.1.101 slave1.jasonsoso.com slave1
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;那么访问&lt;code&gt;hadoop-yarn.jasonsoso.com&lt;/code&gt;则访问IP为&lt;code&gt;192.168.1.100&lt;/code&gt;的机器&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;hadoop&quot;&gt;创建hadoop系统用户&lt;/h4&gt;
+&lt;p&gt;如果你安装 Ubuntu 的时候不是用的 hadoop 用户，那么最好增加一个名为 hadoop 的用户，密码可设置为 123456 (密码随意指定)。	&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;创建新用户	
+&lt;code&gt;sudo useradd -m hadoop -s /bin/bash&lt;/code&gt;	&lt;/li&gt;
+  &lt;li&gt;修改密码		
+&lt;code&gt;sudo passwd hadoop&lt;/code&gt;	&lt;/li&gt;
+  &lt;li&gt;为 hadoop 用户增加管理员权限，方便部署		
+&lt;code&gt;sudo adduser hadoop sudo&lt;/code&gt;	&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;sun-jdk-7&quot;&gt;Sun JDK 7&lt;/h4&gt;
+&lt;p&gt;详情请参考 &lt;a href=&quot;http://www.cnblogs.com/fnng/archive/2013/01/30/2883815.html&quot; title=&quot;ubuntu下配置java环境&quot;&gt;ubuntu下配置java环境&lt;/a&gt; 和 &lt;a href=&quot;http://www.webupd8.org/2012/06/how-to-install-oracle-java-7-in-debian.html&quot; title=&quot;HOW TO INSTALL ORACLE JAVA 7 IN DEBIAN VIA REPOSITORY&quot;&gt;HOW TO INSTALL ORACLE JAVA 7 IN DEBIAN VIA REPOSITORY&lt;/a&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;ssh-serverssh&quot;&gt;安装SSH server、配置SSH无密码登陆&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;执行安装		
+&lt;code&gt;sudo apt-get install openssh-server&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;登陆本机		
+&lt;code&gt;ssh localhost&lt;/code&gt;		&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;配置SSH无密码登陆	&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sudo ssh-keygen -t rsa		# 生成密钥	
+ sudo ssh-copy-id ubuntu@localhost	# 拷贝密钥到某台机器		
+ sudo ssh localhost	#进行无密码登陆	
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;如果做集群，则配置SSH无密码登陆，实现多机器互通&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;hadoop260&quot;&gt;hadoop2.6.0安装&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;下载hadoop2.6.0	&lt;br /&gt;
+ 官网hadoop下载http://hadoop.apache.org/releases.html&lt;/li&gt;
+  &lt;li&gt;解压tar包	&lt;br /&gt;
+ &lt;code&gt;sudo tar -zxvf ./hadoop-2.6.0.tar.gz -C /opt/hadoop  # 解压到/opt/hadoop中&lt;/code&gt;	&lt;br /&gt;
+ 则hadoop的安装根目录为：&lt;code&gt;/opt/hadoop/hadoop-2.6.0&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;修改文件权限&lt;br /&gt;
+ &lt;code&gt;sudo chown -R hadoop:hadoop ./hadoop-2.6.0&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;配置&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;配置环境变量	&lt;br /&gt;
+下面&lt;code&gt;#set Hadoop&lt;/code&gt;才是真正的hadoop配置，而&lt;code&gt;#set java environment&lt;/code&gt;是必须的java环境变量，&lt;code&gt;#set findbugs&lt;/code&gt;、&lt;code&gt;#set ant&lt;/code&gt;、&lt;code&gt;#PROTOBUF&lt;/code&gt;和&lt;code&gt;#set maven environment&lt;/code&gt;是编译hadoop代码必须的，现在没有编译hadoop源码，只需要java环境和hadoop环境足矣。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;执行&lt;code&gt;sudo vi /etc/profile&lt;/code&gt;修改profile文件			&lt;br /&gt;
+添加如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;	#set java environment
+	JAVA_HOME=/usr/java/jdk1.7.0_60
+	export JRE_HOME=/usr/java/jdk1.7.0_60/jre
+	export CLASSPATH=.:$JAVA_HOME/lib:$JRE_HOME/lib:$CLASSPATH
+	export PATH=$JAVA_HOME/bin:$JRE_HOME/bin:$PATH
+
+
+	#set findbugs
+	export LD_LIBRARY_PATH=/usr/local/lib/
+	export FINDBUGS_HOME=/usr/local/findbugs-3.0.0
+	export PATH=$PATH:$FINDBUGS_HOME/bin
+
+	#set ant
+	ANT_HOME=/usr/local/apache-ant-1.9.4
+	export PATH=$PATH:$ANT_HOME/bin
+
+	#PROTOBUF
+	export PROTOC_HOME=/usr/local/protobuf-2.5.0
+	export PATH=$PATH:$PROTOC_HOME/bin
+	export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$PROTOC_HOME/lib`
+
+	#set maven environment
+	M2_HOME=/usr/maven/apache-maven-3.0.5
+	export MAVEN_OPTS=&quot;-Xms256m -Xmx512m&quot;
+	export PATH=$M2_HOME/bin:$PATH
+
+	#set Hadoop
+	export HADOOP_HOME=/opt/hadoop/hadoop-2.6.0
+	export HADOOP_INSTALL=$HADOOP_HOME
+	export HADOOP_MAPRED_HOME=$HADOOP_HOME
+	export HADOOP_COMMON_HOME=$HADOOP_HOME
+	export HADOOP_HDFS_HOME=$HADOOP_HOME
+	export HADOOP_YARN_HOME=$HADOOP_HOME
+	export HADOOP_COMMON_LIB_NATIVE_DIR=$HADOOP_HOME/lib/native
+	export PATH=$PATH:$HADOOP_HOME/sbin:$HADOOP_HOME/bin
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;hadoop-env.sh&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; export JAVA_HOME=/usr/java/jdk1.7.0_60		
+ export HADOOP_HOME=/opt/hadoop/hadoop-2.6.0
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;yarn-env.sh&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; export JAVA_HOME=/usr/java/jdk1.7.0_60		
+ export HADOOP_HOME=/opt/hadoop/hadoop-2.6.0
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;mapred-env.sh&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; export JAVA_HOME=/usr/java/jdk1.7.0_60		
+ export HADOOP_HOME=/opt/hadoop/hadoop-2.6.0
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;core-site.xml&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; &amp;lt;property&amp;gt;
+     &amp;lt;name&amp;gt;fs.default.name&amp;lt;/name&amp;gt;
+     &amp;lt;value&amp;gt;hdfs://hadoop-yarn.dragon.org:8020&amp;lt;/value&amp;gt;
+ &amp;lt;/property&amp;gt;
+
+ &amp;lt;property&amp;gt;
+         &amp;lt;name&amp;gt;hadoop.tmp.dir&amp;lt;/name&amp;gt;
+         &amp;lt;value&amp;gt;/opt/modules/hadoop-2.2.0/data/tmp&amp;lt;/value&amp;gt;
+ &amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;hdfs-site.xml&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; &amp;lt;property&amp;gt;		
+         &amp;lt;name&amp;gt;dfs.replication&amp;lt;/name&amp;gt;
+         &amp;lt;value&amp;gt;1&amp;lt;/value&amp;gt;
+ &amp;lt;/property&amp;gt;
+ &amp;lt;property&amp;gt;
+         &amp;lt;name&amp;gt;dfs.permissions&amp;lt;/name&amp;gt;
+         &amp;lt;value&amp;gt;false&amp;lt;/value&amp;gt;
+ &amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;yarn-site.xml&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; &amp;lt;property&amp;gt;
+     &amp;lt;name&amp;gt;yarn.nodemanager.aux-services&amp;lt;/name&amp;gt;
+     &amp;lt;value&amp;gt;mapreduce_shuffle&amp;lt;/value&amp;gt;
+ &amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;mapred-site.xml&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; &amp;lt;property&amp;gt;	 	        		
+     &amp;lt;name&amp;gt;mapreduce.framework.name&amp;lt;/name&amp;gt;
+     &amp;lt;value&amp;gt;yarn&amp;lt;/value&amp;gt;
+ &amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;启动&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动HDFS(NameNode、DataNode、SecondaryNameNode)&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;
+        &lt;p&gt;NameNode 格式化	&lt;br /&gt;
+  &lt;code&gt;bin/hdfs namenode -format&lt;/code&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;启动NameNode	&lt;br /&gt;
+  &lt;code&gt;sbin/hadoop-daemon.sh start namenode&lt;/code&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;启动DataNode		&lt;br /&gt;
+  &lt;code&gt;sbin/hadoop-daemon.sh start datanode&lt;/code&gt;&lt;/p&gt;
+      &lt;/li&gt;
+      &lt;li&gt;
+        &lt;p&gt;启动SecondaryNameNode		&lt;br /&gt;
+  &lt;code&gt;sbin/hadoop-daemon.sh start secondarynamenode&lt;/code&gt;&lt;/p&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;启动YARN(ResourceManager、NodeManager)
+    &lt;ul&gt;
+      &lt;li&gt;启动ResourceManger		&lt;br /&gt;
+  &lt;code&gt;sbin/yarn-daemon.sh start resourcemanager&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;启动NodeManager&lt;br /&gt;
+  &lt;code&gt;sbin/yarn-daemon.sh start nodemanager&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动历史服务器	&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sbin/mr-jobhistory-daemon.sh start historyserver
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;启动方式&lt;/p&gt;
+
+    &lt;pre&gt;&lt;code&gt; sbin/start-dfs.sh
+ sbin/start-yarn.sh
+ sbin/start-all.sh
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;实例与测试&lt;/h2&gt;
+
+&lt;p&gt;启动后，用命令&lt;code&gt;jps&lt;/code&gt;检查是否启动&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/start-all.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;访问HDFD的NameNode url &lt;code&gt;http://hadoop-yarn.jasonsoso.com:50070/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/50070.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;访问HDFD的Secondary NameNode  url &lt;code&gt;http://hadoop-yarn.jasonsoso.com:50090/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/50090.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;hadoop-&quot;&gt;本文配置主要是为伪布式，那么Hadoop 集群的安装配置大致为如下:&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;选定一台机器作为 Master 主节点&lt;/li&gt;
+  &lt;li&gt;在 Master 主机上配置hadoop用户、安装SSH server、安装Java环境&lt;/li&gt;
+  &lt;li&gt;在 Master 主机上安装Hadoop，并完成配置&lt;/li&gt;
+  &lt;li&gt;在其他主机上配置hadoop用户、安装SSH server、安装Java环境&lt;/li&gt;
+  &lt;li&gt;将 Master 主机上的Hadoop目录复制到其他主机上&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;开启、使用 Hadoop&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;需要特别注意的是:&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;网络配置hosts&lt;/li&gt;
+      &lt;li&gt;SSH无密码登陆各节点&lt;/li&gt;
+      &lt;li&gt;部分配置&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>论框架设计(一)</title>
+   <link href="http://www.jasonsoso.com/201502/design-1"/>
+   <updated>2015-02-06T00:00:00+08:00</updated>
+   <id>http://www.jasonsoso.com/201502/design-1</id>
+   <content type="html">&lt;h3 id=&quot;web&quot;&gt;Web&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;MVC Framwork:&lt;a href=&quot;http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html&quot; title=&quot;SpringMVC&quot;&gt;SpringMVC&lt;/a&gt;，Restful的风格，对比Strus2更简单，更友好。&lt;/li&gt;
+  &lt;li&gt;CSS Framwork：最热火的&lt;a href=&quot;http://getbootstrap.com/&quot; title=&quot;Bootstrap&quot;&gt;Twitter Bootstrap&lt;/a&gt;，提供了简便的布局能力和基本的页面美化。&lt;/li&gt;
+  &lt;li&gt;Javascript Library：随大流用了&lt;a href=&quot;http://jquery.com/&quot; title=&quot;jquery&quot;&gt;JQuery&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Validation Framwork:当然用&lt;a href=&quot;http://jqueryvalidation.org/&quot; title=&quot;jquery validation&quot;&gt;jQuery Validation&lt;/a&gt;,客户端校验和体验都不错！&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;database&quot;&gt;Database&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;数据库设计一般性原则
+    &lt;ol&gt;
+      &lt;li&gt;主键的列名统一为id。&lt;/li&gt;
+      &lt;li&gt;为方便数据操作及维护，不建立任何外键，用程序去保证关联关系。&lt;/li&gt;
+      &lt;li&gt;为表名添加前缀以便日后管理。比如有几十个表，将联系比较紧密的表，使用相同的前缀。&lt;/li&gt;
+      &lt;li&gt;表名全小写，因为MySQL在Linux下默认区分表名大小写。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;传统关系型数据库
+    &lt;ol&gt;
+      &lt;li&gt;MySql，Postgresql&lt;/li&gt;
+      &lt;li&gt;Oracle&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;流行的NoSql
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;http://www.mongodb.org/&quot; title=&quot;mongodb&quot;&gt;MongoDB&lt;/a&gt;，最流行Nosql，一个分布式，面向文档的开源数据库，将数据存成BSON格式，与关系型数据库最为相似，也提供类似SQL的查询语句，更像个schema-less的数据库。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://redis.io/&quot; title=&quot;redis&quot;&gt;Redis&lt;/a&gt;，一个基于内存的缓存数据库，提供强大的TTL等功能，Redis不仅仅支持简单的k/v类型的数据，同时还提供list，set，hash等数据结构的存储。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://ssdb.io/&quot; title=&quot;ssdb&quot;&gt;SSDB&lt;/a&gt;，基于磁盘高速数据库（国产），号称一个高性能的支持丰富数据结构的 NoSQL 数据库代替Redis。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://hbase.apache.org/&quot; title=&quot;hbase&quot;&gt;HBase&lt;/a&gt;，一个分布式的、面向列的开源数据库，该技术来源于Google论文“Bigtable：一个结构化数据的分布式存储系统”。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;本地缓存Cache    
+    &lt;ol&gt;
+      &lt;li&gt;在JVM里的缓存，最老牌的就是Ehcache；    &lt;/li&gt;
+      &lt;li&gt;另外最简单的是&lt;a href=&quot;http://code.google.com/p/guava-libraries/&quot; title=&quot;guava&quot;&gt;Guava&lt;/a&gt;的Cache，也提供TTL；    &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;ORM框架     
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;http://mybatis.github.io/mybatis-3/zh/index.html&quot; title=&quot;mybatis&quot;&gt;MyBatis&lt;/a&gt;,追求高性能的应用，代码与SQL分离管理，相对码农来说更友好，个人推荐的ORM。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://hibernate.org/&quot; title=&quot;hibernate&quot;&gt;Hibernate&lt;/a&gt;，最流行的ORM框架，无论是JPA还是Hibernate（当然JPA的实现还是用Hibernate），都是码农界里面最快速开发的东西。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;search-engine&quot;&gt;Search Engine&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;http://www.elasticsearch.org/&quot; title=&quot;elasticsearch&quot;&gt;Elasticsearch&lt;/a&gt;,一个基于Lucene构建的开源，分布式，RESTful搜索引擎;设计用于云计算；能够达到实时搜索，稳定，可靠，快速。本人喜欢这个。&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://lucene.apache.org/solr/&quot; title=&quot;solr&quot;&gt;Solr&lt;/a&gt;,一个基于Lucene构建的开源，最流行的，最快的搜索引擎。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;services&quot;&gt;Services&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Security Framework     
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;http://shiro.apache.org/&quot; title=&quot;shiro&quot;&gt;Apache Shiro&lt;/a&gt;，个人推荐，比Spring Security简单，容易扩展。&lt;/li&gt;
+      &lt;li&gt;Spring Security， 老牌的安全权限框架。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Schedule    
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;http://quartz-scheduler.org/&quot; title=&quot;quartz-scheduler&quot;&gt;Quartz&lt;/a&gt;，最推荐这个。&lt;/li&gt;
+      &lt;li&gt;Spring Schedule spring自带的轻量级定时调度器&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;utilizes&quot;&gt;Utilizes&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;General 常规包     
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;http://commons.apache.org/proper/commons-lang/&quot; title=&quot;commons-lang&quot;&gt;Apache Commons Lang&lt;/a&gt;,这也太黏码农了，陪伴着码农长大的Jar。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://code.google.com/p/guava-libraries/&quot; title=&quot;guava&quot;&gt;Guava&lt;/a&gt;，Google新鲜出炉的优雅产品，有点新潮，Java8好多基础Class都收此为囊中。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://commons.apache.org/proper/commons-io/&quot; title=&quot;commons-io&quot;&gt;Apache Commons IO&lt;/a&gt;， 同样好使。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://commons.apache.org/proper/commons-fileupload/&quot; title=&quot;commons-fileupload&quot;&gt;Commons FileUpload&lt;/a&gt;，基础上传文件包。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;XML
+    &lt;ol&gt;
+      &lt;li&gt;JDK JAXB ,JDK自带&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://xstream.codehaus.org/&quot; title=&quot;xstream&quot;&gt;Xstream&lt;/a&gt; ,以轻易的将Java对象和xml文档相互转换,而且可以修改某个特定的属性和节点名称,而且也支持json的转换。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;JSON
+    &lt;ol&gt;
+      &lt;li&gt;&lt;a href=&quot;http://code.google.com/p/google-gson/&quot; title=&quot;google-gson&quot;&gt;GSon&lt;/a&gt;,出身名门，出于Google之手，接口优雅。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://jackson.codehaus.org/&quot; title=&quot;jackson&quot;&gt;Jackson&lt;/a&gt;，功能丰富，相对快，Spring默认用它，所以我一直都用他。&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;https://github.com/alibaba/fastjson&quot; title=&quot;fastjson&quot;&gt;Fastjson&lt;/a&gt;，出于阿里人之手，号称全球最快的Json处理框架。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Logging
+    &lt;ol&gt;
+      &lt;li&gt;Slf4j,早就替代了Apache Common Logging了,个人一直用它Log日志。&lt;/li&gt;
+      &lt;li&gt;Logback，Log4j作者的后作Logback就好很多了，另外选择Logstash做日志的中央式处理。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;HttpClient
+    &lt;ol&gt;
+      &lt;li&gt;JDK URL，JDK原生的URL请求。&lt;/li&gt;
+      &lt;li&gt;Apache HttpClient，建议用Apache HttpClient好过JDK自带。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Serializer
+    &lt;ol&gt;
+      &lt;li&gt;JDK Serializer&lt;/li&gt;
+      &lt;li&gt;Jackson Serializer&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://thrift.apache.org/&quot; title=&quot;thrift&quot;&gt;Thrift&lt;/a&gt;，出自Facebook，跨语言，推荐&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;http://avro.apache.org/&quot; title=&quot;avro&quot;&gt;Avro&lt;/a&gt;，出自Hadoop之父Doug Cutting，跨语言，推荐&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;test&quot;&gt;Test&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Unit Test:Junit正统Java测试用例框架，AssertJ 是目前最好的Assert语句库。&lt;/li&gt;
+  &lt;li&gt;Performance/Stability Test：[Jmeter]作为测试工具是最成熟，常用于压力测试，并发测试等等。&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Gitbook（一）：从github到kindle</title>
+   <link href="http://www.jasonsoso.com/201502/gitbook-1"/>
+   <updated>2015-02-02T00:00:00+08:00</updated>
+   <id>http://www.jasonsoso.com/201502/gitbook-1</id>
+   <content type="html">&lt;h2 id=&quot;section&quot;&gt;简说&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.gitbook.io/&quot;&gt;gitbook&lt;/a&gt;是一个用于发布书籍的平台。  &lt;/p&gt;
+
+&lt;p&gt;gitbook提供了一个简单的命令行工具&lt;code&gt;gitbook&lt;/code&gt;用来编译和预览的书籍.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://nodei.co/npm/gitbook/&quot;&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/@/201502/gitbook.png&quot; alt=&quot;NPM&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;其中有如下特点，&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;用&lt;a href=&quot;http://git-scm.com/&quot; title=&quot;git&quot;&gt;git&lt;/a&gt;进行版本管理和发布工具，可以托管在&lt;a href=&quot;https://github.com/&quot; title=&quot;github&quot;&gt;github&lt;/a&gt;上进行多人协助；&lt;/li&gt;
+  &lt;li&gt;以Markdown轻量级的标记语法进行编写的基础；&lt;/li&gt;
+  &lt;li&gt;用nodejs进行构建部署（gitbook），并且可以发布到gitbook官网上；&lt;/li&gt;
+  &lt;li&gt;可以快速转制各种格式流通的电子书格式：PDF, ePub, mobi（Amazon专属格式），或者也可以生成一个线上阅读网站；&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;安装&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装nodejs环境，请到&lt;a href=&quot;http://nodejs.org/download/&quot; title=&quot;nodejs&quot;&gt;nodejs&lt;/a&gt;官网进行下载安装
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/nodejs.png&quot; alt=&quot;windows nodejs&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;安装gitbook环境&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;code&gt;npm install -g gitbook&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;gitbook提供了如下命令:    &lt;br /&gt;
+build [options] [source_dir] 编译指定目录，输出Web格式(_book文件夹中)    &lt;br /&gt;
+serve [options] [source_dir] 监听文件变化并编译指定目录，同时会创建一个服务器用于预览Web    &lt;br /&gt;
+pdf [options] [source_dir] 编译指定目录，输出PDF    &lt;br /&gt;
+epub [options] [source_dir] 编译指定目录，输出epub	    &lt;br /&gt;
+mobi [options] [source_dir] 编译指定目录，输出mobi	    &lt;br /&gt;
+init [source_dir]   通过SUMMARY.md生成作品目录    &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/gitbook2.png&quot; alt=&quot;gitbook&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;书写&lt;/h2&gt;
+
+&lt;p&gt;我暂时没有书写，我现在只是拿来主义&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;发布&lt;/h2&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;gitbook的命令行工具不提供对发布操作的支持，你可以直接使用&lt;code&gt;git&lt;/code&gt;发布，&lt;br /&gt;
+在push成功后，gitbook.io会自动在服务端进行build. 你可以在gitbook.io的个人主页上查看到build信息.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;生成PDF, ePub, mobi    
+&lt;code&gt;gitbook pdf&lt;/code&gt;    
+&lt;code&gt;gitbook epub&lt;/code&gt;    
+&lt;code&gt;gitbook mobi&lt;/code&gt;    &lt;br /&gt;
+以上命令需要calibre的安装，Calibre是一个开源的“一站式”的电子书解决方案，它可以全面满足你的电子书需求。Calibre是免费的，源代码开放，拥有跨平台的设计。   &lt;br /&gt;
+Gitbook会使用其中的ebook-convert功能组件来完成书籍格式的转换。   &lt;br /&gt;
+登录calibre官网http://www.calibre-ebook.com/，下载安装。    &lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;拿来主义&lt;/h2&gt;
+
+&lt;p&gt;因为gitbook上的书太好了，我想用kindle看，我看中了这本书《Elasticsearch权威指南中文版》&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;从github上克隆源码&lt;code&gt;git clone https://github.com/looly/elasticsearch-definitive-guide-cn.git&lt;/code&gt;    &lt;/li&gt;
+  &lt;li&gt;进入源码目录，&lt;code&gt;cd elasticsearch-definitive-guide-cn&lt;/code&gt;     &lt;/li&gt;
+  &lt;li&gt;生成mobi格式 &lt;code&gt;gitbook pdf&lt;/code&gt;  
+&lt;code&gt;gitbook mobi&lt;/code&gt; 生成mobi格式，此格式为Kindle专属格式&lt;/li&gt;
+  &lt;li&gt;复制mobi格式的文件到kindle，OK！搞定！enjoy it！
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/IMG_20150202_171118.jpg&quot; alt=&quot;my kindle&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>B树索引与位图索引</title>
+   <link href="http://www.jasonsoso.com/201501/B-tree-indexes-and-bitmap-indexes"/>
+   <updated>2015-01-18T00:00:00+08:00</updated>
+   <id>http://www.jasonsoso.com/201501/B-tree-indexes-and-bitmap-indexes</id>
+   <content type="html">&lt;h2 id=&quot;section&quot;&gt;简说&lt;/h2&gt;
+
+&lt;p&gt;在理解索引时，可以想象一本书，其中书的内容就相当于表里的数据，而书前面的目录就相当于该表的索引。&lt;br /&gt;
+同时，通常情况下，索引所占用的磁盘空间要比表要小得多，其主要作用是为了加快对数据的搜索速度，也可以用来保证数据的唯一性。&lt;br /&gt;
+普遍运用在数据库和文件系统。&lt;/p&gt;
+
+&lt;p&gt;索引作为一种可选的数据结构，你可以选择为某个表里的创建索引，也可以不创建。这是因为一旦创建了索引，就意味着数据库对表进行DML（包括INSERT、UPDATE、DELETE）时，必须处理额外的工作量（也就是对索引结构的维护）以及存储方面的开销。所以创建索引时，需要考虑创建索引所带来的查询性能方面的提高，与引起的额外的开销相比，是否值得。&lt;/p&gt;
+
+&lt;p&gt;从物理上说，索引通常可以分为：常规B树索引、位图（bitmap）索引、翻转（reverse）索引等等…&lt;/p&gt;
+
+&lt;h2 id=&quot;b&quot;&gt;B树索引&lt;/h2&gt;
+
+&lt;p&gt;即二叉搜索树，也是一种树状数据结构；	&lt;br /&gt;
+大量的数据库（如MySQL、oracle、PostgreSQL等）都在使用B树。B树索引本质上是对索引字段进行排序，然后通过类似二分查找的方法进行快速查找，即它要求索引的字段是可排序的，一般而言，可排序的是一维字段，比如时间、身份证号码  手机号码、QQ等等。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;数据结构&lt;/strong&gt;：
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/b.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;特点&lt;/strong&gt;： 	&lt;br /&gt;
+1. 索引不存储null值，单一索引不存储null值，复合索引不存储全为null的值；  &lt;br /&gt;
+2. 不适合键值较少的列（重复数据较多的列）；比如时间、身份证、手机、QQ等  &lt;br /&gt;
+3. 前导模糊查询不能利用索引(like ‘%XX’或者like ‘%XX%’)&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;位图索引&lt;/h2&gt;
+
+&lt;p&gt;我们知道计算机所有信息最终都是通过“位bit”来运算的，二进制位运算在计算机中非常高效。而位图索引也是用0或1来处理索引进程，故得名位图索引。&lt;br /&gt;
+位图索引主要针对大量相同值的列而创建的，索引块的一个索引行中存储键值、起止RowId及此键值的位图，根据位图信息可以得知每一条记录的ROWID。它为列的每个键值建立位图，位图中的每一位可能对应多个列，位图中位的值为1表示此行的值为对应的键值。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;特点&lt;/strong&gt;： 	&lt;br /&gt;
+1. 可以存储null值；  &lt;br /&gt;
+2. 不适合键值较多的列（重复数据较少的列）,适合只有几个固定值的列；如性别、婚姻状况、行政区等等   &lt;br /&gt;
+3. 相对于B*Tree索引,占用的空间非常小,创建和使用非常快；  &lt;br /&gt;
+4. 适合静态数据，而不适合索引频繁更新的列；  &lt;br /&gt;
+5. 使用count、and、or或in查询时,直接用索引的位图进行或运算,快速得出结果行数据。  &lt;/p&gt;
+
+</content>
+ </entry>
+ 
+
+</feed>
