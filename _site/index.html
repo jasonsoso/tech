@@ -111,6 +111,77 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/201604/static-code">
+        静态代码质量的几个建议
+      </a>
+    </h1>
+
+    <span class="post-date">15 Apr 2016</span>
+
+    <ol>
+  <li>
+    <p>捕捉异常用Logger，不要直接e.printStackTrace();请用Logger，不要直接System.out.println();<br />
+避免在正式程序代码中使用 System.out 或 System.err 或者 main方法，如果想测试，则写测试用例junit<br />
+Logger日志等级如下：<br />
+logger.info 用于线上，记录重要的信息。<br />
+logger.debug 用于开发，trycatch异常，比较常用。<br />
+logger.warn 用于是否稳定。<br />
+logger.error 用于系统错误，属于高级别。
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc1.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>请用面向接口，比如以下java常用类：Map&lt;String, String&gt; priceUnitsMap = new HashMap&lt;String, String&gt;();Set employees = new HashSet()；<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc2.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>针对常量，进行比较，请常量放左边，变量放右边进行比较，预防空指针;int类型请用==进行比较对比，String请用equals进行比较对比！<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc3.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>针对方法，请删除无用的参数
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc4.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>类的命名：必须由大写字母开头而其他字母都小写的单词组成；如果两个单词组合而成，则两个单词首字母为大写，其他为小写，不使用拼音，如DataUtil。<br />
+方法的命名：方法名应该是动词，大小写可混用，但首字母应小写。在每个方法名内，大写字母将词分隔，如：send，sendMessage。<br />
+变量的命名：变量的名字可大小写混用，但首字符应小写。词由大写字母分隔。<br />
+数组的命名：数组应该总是用下面的方式来命名：byte[] buffer;而不是byte buffer[]。<br />
+常量的命名：统一大写，复合词则用下划线连接，如：IREE_PORT;
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc5.png" alt="" /> 
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc5-2.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>删除无用的变量，或者是import，或者是局部变量
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6.png" alt="" /><img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6-2.png" alt="" /><img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6-3.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>一律用大括号括住 if 和 loop 语句<br />
+if else 建议写上{}，个人习惯比较清晰和安全。
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc7.png" alt="" /> </p>
+  </li>
+  <li>注释几点说明：
+    <ol>
+      <li>内容要简单、明了、含义准确，防止注释的多义性。</li>
+      <li>注释的就近原则。对代码的注释应放在其上方相邻或右方的位置，不可放在下方。</li>
+      <li>面向接口，接口注释采用 /** …… */，在接口注释清楚的前提下对应的实现类可以不加注释。</li>
+      <li>如果方法名称，简单易懂，可以不加注释，方法名称最好能让人通俗易懂。尽量用方法名就能说明你的意义，因为维护注释也需要很大的成本.。</li>
+      <li>常量：常量通常具有一定的实际意义，要定义相应说明。</li>
+      <li>一个方法多次改动，也请维护你的注释。</li>
+    </ol>
+  </li>
+  <li>SVN几点操作说明
+    <ol>
+      <li>在修改代码先，先update。</li>
+      <li>修改后，先测试无BUG，再update，没冲突，再COMMINT。</li>
+      <li>在COMMINT前， 想看是否是自己想提交的代码，可资源对比，是与服务器上代码比较。</li>
+      <li>在每提交代码时，加上注解再提交。</li>
+    </ol>
+  </li>
+</ol>
+
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/201604/sso">
         单点登录(SSO)概要设计
       </a>
@@ -913,93 +984,6 @@ elasticsearch.bat
 <ol>
   <li>Unit Test:Junit正统Java测试用例框架，AssertJ 是目前最好的Assert语句库。</li>
   <li>Performance/Stability Test：[Jmeter]作为测试工具是最成熟，常用于压力测试，并发测试等等。</li>
-</ol>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/201502/gitbook-1">
-        Gitbook（一）：从github到kindle
-      </a>
-    </h1>
-
-    <span class="post-date">02 Feb 2015</span>
-
-    <h2 id="section">简说</h2>
-
-<p><a href="https://www.gitbook.io/">gitbook</a>是一个用于发布书籍的平台。  </p>
-
-<p>gitbook提供了一个简单的命令行工具<code>gitbook</code>用来编译和预览的书籍.</p>
-
-<p><a href="https://nodei.co/npm/gitbook/"><img src="http://7u2ivm.com1.z0.glb.clouddn.com/@/201502/gitbook.png" alt="NPM" /></a></p>
-
-<p>其中有如下特点，</p>
-
-<ol>
-  <li>用<a href="http://git-scm.com/" title="git">git</a>进行版本管理和发布工具，可以托管在<a href="https://github.com/" title="github">github</a>上进行多人协助；</li>
-  <li>以Markdown轻量级的标记语法进行编写的基础；</li>
-  <li>用nodejs进行构建部署（gitbook），并且可以发布到gitbook官网上；</li>
-  <li>可以快速转制各种格式流通的电子书格式：PDF, ePub, mobi（Amazon专属格式），或者也可以生成一个线上阅读网站；</li>
-</ol>
-
-<h2 id="section-1">安装</h2>
-
-<ol>
-  <li>
-    <p>安装nodejs环境，请到<a href="http://nodejs.org/download/" title="nodejs">nodejs</a>官网进行下载安装
-<img src="http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/nodejs.png" alt="windows nodejs" /></p>
-  </li>
-  <li>
-    <p>安装gitbook环境</p>
-  </li>
-</ol>
-
-<p><code>npm install -g gitbook</code></p>
-
-<p>gitbook提供了如下命令:    <br />
-build [options] [source_dir] 编译指定目录，输出Web格式(_book文件夹中)    <br />
-serve [options] [source_dir] 监听文件变化并编译指定目录，同时会创建一个服务器用于预览Web    <br />
-pdf [options] [source_dir] 编译指定目录，输出PDF    <br />
-epub [options] [source_dir] 编译指定目录，输出epub	    <br />
-mobi [options] [source_dir] 编译指定目录，输出mobi	    <br />
-init [source_dir]   通过SUMMARY.md生成作品目录    </p>
-
-<p><img src="http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/gitbook2.png" alt="gitbook" /></p>
-
-<h2 id="section-2">书写</h2>
-
-<p>我暂时没有书写，我现在只是拿来主义</p>
-
-<h2 id="section-3">发布</h2>
-
-<ol>
-  <li>
-    <p>gitbook的命令行工具不提供对发布操作的支持，你可以直接使用<code>git</code>发布，<br />
-在push成功后，gitbook.io会自动在服务端进行build. 你可以在gitbook.io的个人主页上查看到build信息.</p>
-  </li>
-  <li>
-    <p>生成PDF, ePub, mobi    
-<code>gitbook pdf</code>    
-<code>gitbook epub</code>    
-<code>gitbook mobi</code>    <br />
-以上命令需要calibre的安装，Calibre是一个开源的“一站式”的电子书解决方案，它可以全面满足你的电子书需求。Calibre是免费的，源代码开放，拥有跨平台的设计。   <br />
-Gitbook会使用其中的ebook-convert功能组件来完成书籍格式的转换。   <br />
-登录calibre官网http://www.calibre-ebook.com/，下载安装。    </p>
-  </li>
-</ol>
-
-<h2 id="section-4">拿来主义</h2>
-
-<p>因为gitbook上的书太好了，我想用kindle看，我看中了这本书《Elasticsearch权威指南中文版》</p>
-
-<ol>
-  <li>从github上克隆源码<code>git clone https://github.com/looly/elasticsearch-definitive-guide-cn.git</code>    </li>
-  <li>进入源码目录，<code>cd elasticsearch-definitive-guide-cn</code>     </li>
-  <li>生成mobi格式 <code>gitbook pdf</code>  
-<code>gitbook mobi</code> 生成mobi格式，此格式为Kindle专属格式</li>
-  <li>复制mobi格式的文件到kindle，OK！搞定！enjoy it！
-<img src="http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/IMG_20150202_171118.jpg" alt="my kindle" /></li>
 </ol>
 
   </div>

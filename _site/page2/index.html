@@ -111,6 +111,93 @@
   
   <div class="post">
     <h1 class="post-title">
+      <a href="/201502/gitbook-1">
+        Gitbook（一）：从github到kindle
+      </a>
+    </h1>
+
+    <span class="post-date">02 Feb 2015</span>
+
+    <h2 id="section">简说</h2>
+
+<p><a href="https://www.gitbook.io/">gitbook</a>是一个用于发布书籍的平台。  </p>
+
+<p>gitbook提供了一个简单的命令行工具<code>gitbook</code>用来编译和预览的书籍.</p>
+
+<p><a href="https://nodei.co/npm/gitbook/"><img src="http://7u2ivm.com1.z0.glb.clouddn.com/@/201502/gitbook.png" alt="NPM" /></a></p>
+
+<p>其中有如下特点，</p>
+
+<ol>
+  <li>用<a href="http://git-scm.com/" title="git">git</a>进行版本管理和发布工具，可以托管在<a href="https://github.com/" title="github">github</a>上进行多人协助；</li>
+  <li>以Markdown轻量级的标记语法进行编写的基础；</li>
+  <li>用nodejs进行构建部署（gitbook），并且可以发布到gitbook官网上；</li>
+  <li>可以快速转制各种格式流通的电子书格式：PDF, ePub, mobi（Amazon专属格式），或者也可以生成一个线上阅读网站；</li>
+</ol>
+
+<h2 id="section-1">安装</h2>
+
+<ol>
+  <li>
+    <p>安装nodejs环境，请到<a href="http://nodejs.org/download/" title="nodejs">nodejs</a>官网进行下载安装
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/nodejs.png" alt="windows nodejs" /></p>
+  </li>
+  <li>
+    <p>安装gitbook环境</p>
+  </li>
+</ol>
+
+<p><code>npm install -g gitbook</code></p>
+
+<p>gitbook提供了如下命令:    <br />
+build [options] [source_dir] 编译指定目录，输出Web格式(_book文件夹中)    <br />
+serve [options] [source_dir] 监听文件变化并编译指定目录，同时会创建一个服务器用于预览Web    <br />
+pdf [options] [source_dir] 编译指定目录，输出PDF    <br />
+epub [options] [source_dir] 编译指定目录，输出epub	    <br />
+mobi [options] [source_dir] 编译指定目录，输出mobi	    <br />
+init [source_dir]   通过SUMMARY.md生成作品目录    </p>
+
+<p><img src="http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/gitbook2.png" alt="gitbook" /></p>
+
+<h2 id="section-2">书写</h2>
+
+<p>我暂时没有书写，我现在只是拿来主义</p>
+
+<h2 id="section-3">发布</h2>
+
+<ol>
+  <li>
+    <p>gitbook的命令行工具不提供对发布操作的支持，你可以直接使用<code>git</code>发布，<br />
+在push成功后，gitbook.io会自动在服务端进行build. 你可以在gitbook.io的个人主页上查看到build信息.</p>
+  </li>
+  <li>
+    <p>生成PDF, ePub, mobi    
+<code>gitbook pdf</code>    
+<code>gitbook epub</code>    
+<code>gitbook mobi</code>    <br />
+以上命令需要calibre的安装，Calibre是一个开源的“一站式”的电子书解决方案，它可以全面满足你的电子书需求。Calibre是免费的，源代码开放，拥有跨平台的设计。   <br />
+Gitbook会使用其中的ebook-convert功能组件来完成书籍格式的转换。   <br />
+登录calibre官网http://www.calibre-ebook.com/，下载安装。    </p>
+  </li>
+</ol>
+
+<h2 id="section-4">拿来主义</h2>
+
+<p>因为gitbook上的书太好了，我想用kindle看，我看中了这本书《Elasticsearch权威指南中文版》</p>
+
+<ol>
+  <li>从github上克隆源码<code>git clone https://github.com/looly/elasticsearch-definitive-guide-cn.git</code>    </li>
+  <li>进入源码目录，<code>cd elasticsearch-definitive-guide-cn</code>     </li>
+  <li>生成mobi格式 <code>gitbook pdf</code>  
+<code>gitbook mobi</code> 生成mobi格式，此格式为Kindle专属格式</li>
+  <li>复制mobi格式的文件到kindle，OK！搞定！enjoy it！
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/IMG_20150202_171118.jpg" alt="my kindle" /></li>
+</ol>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
       <a href="/201501/B-tree-indexes-and-bitmap-indexes">
         B树索引与位图索引
       </a>

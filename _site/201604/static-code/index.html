@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>
+    
+      静态代码质量的几个建议 &middot; Jason技术流水账
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css">
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/jason.jpg">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>@Jason,Java程序猿,2B青年,技术分享.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">存档</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/category/">分类</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/notes/">笔记</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/tag/">标签</a>
+        
+      
+    
+    <a class="sidebar-nav-item" href="https://github.com/jasonsoso/tech">GitHub project</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2016  Jason
+      <br/>
+      粤ICP备15021619号
+    </p>
+  </div>
+</div>
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Jason技术流水账</a>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">静态代码质量的几个建议</h1>
+  <span class="post-date">15 Apr 2016</span>
+  <ol>
+  <li>
+    <p>捕捉异常用Logger，不要直接e.printStackTrace();请用Logger，不要直接System.out.println();<br />
+避免在正式程序代码中使用 System.out 或 System.err 或者 main方法，如果想测试，则写测试用例junit<br />
+Logger日志等级如下：<br />
+logger.info 用于线上，记录重要的信息。<br />
+logger.debug 用于开发，trycatch异常，比较常用。<br />
+logger.warn 用于是否稳定。<br />
+logger.error 用于系统错误，属于高级别。
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc1.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>请用面向接口，比如以下java常用类：Map&lt;String, String&gt; priceUnitsMap = new HashMap&lt;String, String&gt;();Set employees = new HashSet()；<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc2.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>针对常量，进行比较，请常量放左边，变量放右边进行比较，预防空指针;int类型请用==进行比较对比，String请用equals进行比较对比！<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc3.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>针对方法，请删除无用的参数
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc4.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>类的命名：必须由大写字母开头而其他字母都小写的单词组成；如果两个单词组合而成，则两个单词首字母为大写，其他为小写，不使用拼音，如DataUtil。<br />
+方法的命名：方法名应该是动词，大小写可混用，但首字母应小写。在每个方法名内，大写字母将词分隔，如：send，sendMessage。<br />
+变量的命名：变量的名字可大小写混用，但首字符应小写。词由大写字母分隔。<br />
+数组的命名：数组应该总是用下面的方式来命名：byte[] buffer;而不是byte buffer[]。<br />
+常量的命名：统一大写，复合词则用下划线连接，如：IREE_PORT;
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc5.png" alt="" /> 
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc5-2.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>删除无用的变量，或者是import，或者是局部变量
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6.png" alt="" /><img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6-2.png" alt="" /><img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6-3.png" alt="" /> </p>
+  </li>
+  <li>
+    <p>一律用大括号括住 if 和 loop 语句<br />
+if else 建议写上{}，个人习惯比较清晰和安全。
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc7.png" alt="" /> </p>
+  </li>
+  <li>注释几点说明：
+    <ol>
+      <li>内容要简单、明了、含义准确，防止注释的多义性。</li>
+      <li>注释的就近原则。对代码的注释应放在其上方相邻或右方的位置，不可放在下方。</li>
+      <li>面向接口，接口注释采用 /** …… */，在接口注释清楚的前提下对应的实现类可以不加注释。</li>
+      <li>如果方法名称，简单易懂，可以不加注释，方法名称最好能让人通俗易懂。尽量用方法名就能说明你的意义，因为维护注释也需要很大的成本.。</li>
+      <li>常量：常量通常具有一定的实际意义，要定义相应说明。</li>
+      <li>一个方法多次改动，也请维护你的注释。</li>
+    </ol>
+  </li>
+  <li>SVN几点操作说明
+    <ol>
+      <li>在修改代码先，先update。</li>
+      <li>修改后，先测试无BUG，再update，没冲突，再COMMINT。</li>
+      <li>在COMMINT前， 想看是否是自己想提交的代码，可资源对比，是与服务器上代码比较。</li>
+      <li>在每提交代码时，加上注解再提交。</li>
+    </ol>
+  </li>
+</ol>
+
+
+  <div class="tags">
+    <a href="https://github.com/jasonsoso/tech/blob/gh-pages/_posts/2016-04-15-static-code.md" class="pull-right">編輯</a> <a href="/tag/#静态代码">#静态代码</a> <a href="/tag/#建议">#建议</a> 
+  </div>
+</div>
+
+<div class="pagination">
+  
+  <a class="pagination-item older" href="/201604/sso">单点登录(SSO)概要设计</a>
+  
+  
+  <span class="pagination-item newer">Newer</span>
+  
+</div>
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="/201604/static-code" data-title="静态代码质量的几个建议" data-url="http://www.jasonsoso.com/201604/static-code"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jasonsoso"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+      
+
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?462dfff9f03192fcf3c8194c48448b2e";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+
+    </script>
+  </body>
+</html>

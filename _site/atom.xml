@@ -4,13 +4,80 @@
  <title>Jason技术流水账</title>
  <link href="http://www.jasonsoso.com/atom.xml" rel="self"/>
  <link href="http://www.jasonsoso.com/"/>
- <updated>2016-04-15T12:07:41+08:00</updated>
+ <updated>2016-04-16T06:45:13+08:00</updated>
  <id>http://www.jasonsoso.com</id>
  <author>
    <name>Jason</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>静态代码质量的几个建议</title>
+   <link href="http://www.jasonsoso.com/201604/static-code"/>
+   <updated>2016-04-15T00:00:00+08:00</updated>
+   <id>http://www.jasonsoso.com/201604/static-code</id>
+   <content type="html">&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;捕捉异常用Logger，不要直接e.printStackTrace();请用Logger，不要直接System.out.println();&lt;br /&gt;
+避免在正式程序代码中使用 System.out 或 System.err 或者 main方法，如果想测试，则写测试用例junit&lt;br /&gt;
+Logger日志等级如下：&lt;br /&gt;
+logger.info 用于线上，记录重要的信息。&lt;br /&gt;
+logger.debug 用于开发，trycatch异常，比较常用。&lt;br /&gt;
+logger.warn 用于是否稳定。&lt;br /&gt;
+logger.error 用于系统错误，属于高级别。
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc1.png&quot; alt=&quot;&quot; /&gt; &lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;请用面向接口，比如以下java常用类：Map&amp;lt;String, String&amp;gt; priceUnitsMap = new HashMap&amp;lt;String, String&amp;gt;();Set employees = new HashSet()；&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc2.png&quot; alt=&quot;&quot; /&gt; &lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;针对常量，进行比较，请常量放左边，变量放右边进行比较，预防空指针;int类型请用==进行比较对比，String请用equals进行比较对比！&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc3.png&quot; alt=&quot;&quot; /&gt; &lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;针对方法，请删除无用的参数
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc4.png&quot; alt=&quot;&quot; /&gt; &lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;类的命名：必须由大写字母开头而其他字母都小写的单词组成；如果两个单词组合而成，则两个单词首字母为大写，其他为小写，不使用拼音，如DataUtil。&lt;br /&gt;
+方法的命名：方法名应该是动词，大小写可混用，但首字母应小写。在每个方法名内，大写字母将词分隔，如：send，sendMessage。&lt;br /&gt;
+变量的命名：变量的名字可大小写混用，但首字符应小写。词由大写字母分隔。&lt;br /&gt;
+数组的命名：数组应该总是用下面的方式来命名：byte[] buffer;而不是byte buffer[]。&lt;br /&gt;
+常量的命名：统一大写，复合词则用下划线连接，如：IREE_PORT;
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc5.png&quot; alt=&quot;&quot; /&gt; 
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc5-2.png&quot; alt=&quot;&quot; /&gt; &lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;删除无用的变量，或者是import，或者是局部变量
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6.png&quot; alt=&quot;&quot; /&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6-2.png&quot; alt=&quot;&quot; /&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6-3.png&quot; alt=&quot;&quot; /&gt; &lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;一律用大括号括住 if 和 loop 语句&lt;br /&gt;
+if else 建议写上{}，个人习惯比较清晰和安全。
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc7.png&quot; alt=&quot;&quot; /&gt; &lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;注释几点说明：
+    &lt;ol&gt;
+      &lt;li&gt;内容要简单、明了、含义准确，防止注释的多义性。&lt;/li&gt;
+      &lt;li&gt;注释的就近原则。对代码的注释应放在其上方相邻或右方的位置，不可放在下方。&lt;/li&gt;
+      &lt;li&gt;面向接口，接口注释采用 /** …… */，在接口注释清楚的前提下对应的实现类可以不加注释。&lt;/li&gt;
+      &lt;li&gt;如果方法名称，简单易懂，可以不加注释，方法名称最好能让人通俗易懂。尽量用方法名就能说明你的意义，因为维护注释也需要很大的成本.。&lt;/li&gt;
+      &lt;li&gt;常量：常量通常具有一定的实际意义，要定义相应说明。&lt;/li&gt;
+      &lt;li&gt;一个方法多次改动，也请维护你的注释。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;SVN几点操作说明
+    &lt;ol&gt;
+      &lt;li&gt;在修改代码先，先update。&lt;/li&gt;
+      &lt;li&gt;修改后，先测试无BUG，再update，没冲突，再COMMINT。&lt;/li&gt;
+      &lt;li&gt;在COMMINT前， 想看是否是自己想提交的代码，可资源对比，是与服务器上代码比较。&lt;/li&gt;
+      &lt;li&gt;在每提交代码时，加上注解再提交。&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>单点登录(SSO)概要设计</title>
