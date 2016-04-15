@@ -4,13 +4,153 @@
  <title>Jason技术流水账</title>
  <link href="http://www.jasonsoso.com/atom.xml" rel="self"/>
  <link href="http://www.jasonsoso.com/"/>
- <updated>2015-12-16T22:38:39+08:00</updated>
+ <updated>2016-04-15T10:51:29+08:00</updated>
  <id>http://www.jasonsoso.com</id>
  <author>
    <name>Jason</name>
    <email></email>
  </author>
 
+ 
+ <entry>
+   <title>单点登录(SSO)概要设计</title>
+   <link href="http://www.jasonsoso.com/201604/sso"/>
+   <updated>2016-04-15T00:00:00+08:00</updated>
+   <id>http://www.jasonsoso.com/201604/sso</id>
+   <content type="html">&lt;h2 id=&quot;sso&quot;&gt;第一章	： 单点登录(SSO)&lt;/h2&gt;
+
+&lt;h4 id=&quot;sso-1&quot;&gt;SSO诞生的目标&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;提高用户体验，提高用户的效率；&lt;/li&gt;
+  &lt;li&gt;资源整合；&lt;/li&gt;
+  &lt;li&gt;简化管理，降低了安全的风险和管理的消耗；&lt;/li&gt;
+  &lt;li&gt;提高服务之间的合作效率&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;sso-2&quot;&gt;SSO概述&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;什么是SSO	&lt;br /&gt;
+单点登录（ Single Sign-On , 简称 SSO ）是目前比较流行的服务于企业业务整合的解决方案之一， SSO 使得在多个应用系统中，用户只需要 登录一次 就可以访问所有相互信任的应用系统。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;下图为SSO单点登录物理拓扑图	
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso1.png&quot; alt=&quot;SSO单点登录物理拓扑图&quot; title=&quot;SSO单点登录物理拓扑图&quot; /&gt;&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;sso-3&quot;&gt;SSO的技术的几种技术方案&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;基于cookies实现&lt;br /&gt;
+不支持跨域，不推荐&lt;/li&gt;
+  &lt;li&gt;基于session共享来实现&lt;br /&gt;
+捆绑容器，php与java互通相对麻烦，不推荐&lt;/li&gt;
+  &lt;li&gt;基于身份验证票据ticket来实现&lt;br /&gt;
+支持跨域，支持语言客户端，推荐&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;sso-4&quot;&gt;SSO的技术机制&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;基本原理：&lt;br /&gt;
+当用户第一次访问应用系统1的时候，因为还没有登录，会被引导到认证系统中进行登录；根据用户提供的登录信息，认证系统进行身份校验，如果通过校验，应该返回给用户一个认证的凭据－－ticket；用户再访问别的应用的时候就会将这个ticket带上，作为自己认证的凭据，应用系统接受到请求之后会把ticket送到认证系统进行校验，检查ticket的合法性。如果通过校验，用户就可以在不用再次登录的情况下访问应用系统2和应用系统3了。&lt;/li&gt;
+  &lt;li&gt;如图基本原理流程：
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso2.png&quot; alt=&quot;基本原理&quot; title=&quot;基本原理&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;sso--cas&quot;&gt;第二章 ： SSO的实现 –– CAS&lt;/h2&gt;
+
+&lt;h4 id=&quot;cas&quot;&gt;CAS简介&lt;/h4&gt;
+&lt;p&gt;CAS 是 Yale 大学发起的一个开源项目，旨在为 Web 应用系统提供一种可靠的单点登录方法，CAS 在 2004 年 12 月正式成为 JA-SIG 的一个项目。&lt;/p&gt;
+
+&lt;p&gt;CAS 具有以下特点：&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;开源的企业级单点登录解决方案。	&lt;/li&gt;
+  &lt;li&gt;Java开源的、多协议的 SSO 解决方案； Protocols ： Custom Protocol 、 CAS 、 OAuth2 、 OpenID 、 RESTful API 、 SAML1.1 、 SAML2.0 等。&lt;/li&gt;
+  &lt;li&gt;支持多种认证机制： Active Directory 、 JAAS 、 JDBC 、 LDAP 、 X.509 Certificates 等。&lt;/li&gt;
+  &lt;li&gt; 	提供高可用性：通过把认证过的状态数据存储在 TicketRegistry 组件中，这些组件有很多支持分布式环境的实现，如： BerkleyDB 、 Default 、 EhcacheTicketRegistry 、 JDBCTicketRegistry 、 JBOSS &lt;/li&gt;
+  &lt;li&gt;CAS Server 为需要独立部署的 Web 应用。&lt;/li&gt;
+  &lt;li&gt;CAS Client 支持非常多的客户端(这里指单点登录系统中的各个 Web 应用)，包括 Java, .Net, PHP, Perl, Apache, uPortal, Ruby 等。&lt;/li&gt;
+  &lt;li&gt;支持跨域单点登录，支持二级域名的单点登录。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;cas-1&quot;&gt;CAS架构体系&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso3.png&quot; alt=&quot;CAS架构体系&quot; title=&quot;CAS架构体系&quot; /&gt;	&lt;br /&gt;
+	注意：详细请移步到http://jasig.github.io/cas/4.1.x/planning/Architecture.html&lt;/p&gt;
+
+&lt;h4 id=&quot;cas-2&quot;&gt;CAS原理和协议&lt;/h4&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso4.png&quot; alt=&quot;CAS原理和协议&quot; title=&quot;CAS原理和协议&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;cas-&quot;&gt;CAS 页面流程与场景&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;以“广告系统”为入口
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso5.png&quot; alt=&quot;&quot; /&gt; &lt;/li&gt;
+  &lt;li&gt;以“运营系统”为入口
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso6.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;以“SSO系统”为入口
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso7.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;以“账户中心”为入口
+&lt;img src=&quot;http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso8.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;注意：以上操作一个系统登录，则其他所有系统均可以访问，如果一个系统进行退出，则其他所有系统均已退出&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;第三章	：账户中心&lt;/h2&gt;
+
+&lt;h4 id=&quot;section-1&quot;&gt;账户信息管理&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改个人资料&lt;br /&gt;
+此功能为修改当前登录者的个人资料，比如邮箱，性别等等。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;修改登录密码&lt;br /&gt;
+此功能为修改登录者的密码。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;账户管理&lt;br /&gt;
+此功能为有一定权限的账号才可以使用，就是管理全局的账户，针对账户进行新增，修改信息，修改密码，删除，锁定，解锁等等。还支持用户授权管理，针对账户授系统权限和角色权限等等。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;section-2&quot;&gt;账户权限管理&lt;/h4&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;角色管理&lt;br /&gt;
+此功能为针对角色进行管理，具体给角色进行赋权。&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;权限资源管理&lt;br /&gt;
+此功能为针对权限资源、菜单等进行管理。&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;第四章：技术选型&lt;/h2&gt;
+
+&lt;h4 id=&quot;sso--cas-1&quot;&gt;单点登录SSO的实现 – CAS&lt;/h4&gt;
+
+&lt;p&gt;详情请移步：&lt;br /&gt;
+Cas官网：http://jasig.github.io/cas/4.1.x/index.html&lt;br /&gt;
+Cas代码库：https://github.com/Jasig/cas&lt;br /&gt;
+jasig CAS实现单点登录(数据库认证)：http://my.oschina.net/indestiny/blog/200768&lt;/p&gt;
+
+&lt;p&gt;或者参考第二章&lt;/p&gt;
+
+&lt;h4 id=&quot;shiro&quot;&gt;权限安全管理– shiro&lt;/h4&gt;
+
+&lt;p&gt;详情请移步：&lt;br /&gt;
+Shiro官网：http://shiro.apache.org/ &lt;br /&gt;
+让Apache Shiro保护你的应用：http://www.infoq.com/cn/articles/apache-shiro&lt;br /&gt;
+将 Shiro作为权限基础：http://www.ibm.com/developerworks/cn/opensource/os-cn-shiro/&lt;/p&gt;
+
+</content>
+ </entry>
  
  <entry>
    <title>搜索引擎ElasticSearch</title>
