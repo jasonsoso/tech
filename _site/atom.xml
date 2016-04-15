@@ -4,7 +4,7 @@
  <title>Jason技术流水账</title>
  <link href="http://www.jasonsoso.com/atom.xml" rel="self"/>
  <link href="http://www.jasonsoso.com/"/>
- <updated>2016-04-15T10:51:29+08:00</updated>
+ <updated>2016-04-15T12:07:41+08:00</updated>
  <id>http://www.jasonsoso.com</id>
  <author>
    <name>Jason</name>
@@ -148,6 +148,12 @@ jasig CAS实现单点登录(数据库认证)：http://my.oschina.net/indestiny/b
 Shiro官网：http://shiro.apache.org/ &lt;br /&gt;
 让Apache Shiro保护你的应用：http://www.infoq.com/cn/articles/apache-shiro&lt;br /&gt;
 将 Shiro作为权限基础：http://www.ibm.com/developerworks/cn/opensource/os-cn-shiro/&lt;/p&gt;
+
+&lt;h4 id=&quot;oauth-20-&quot;&gt;第三方应用登录 – OAuth 2.0 协议&lt;/h4&gt;
+
+&lt;p&gt;详情请移步：&lt;br /&gt;
+OAuth 2.0官网：http://oauth.net/2/	&lt;br /&gt;
+理解OAuth 2.0：http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html&lt;/p&gt;
 
 </content>
  </entry>
