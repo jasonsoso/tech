@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>
+    
+      Jason技术流水账 &middot; Java程序猿 2B青年 技术分享
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css">
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/jason.jpg">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>@Jason,Java程序猿,2B青年,技术分享.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">存档</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/category/">分类</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/notes/">笔记</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/tag/">标签</a>
+        
+      
+    
+    <a class="sidebar-nav-item" href="https://github.com/jasonsoso/tech">GitHub project</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2016  Jason
+      <br/>
+      粤ICP备15021619号
+    </p>
+  </div>
+</div>
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Jason技术流水账</a>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/201501/B-tree-indexes-and-bitmap-indexes">
+        B树索引与位图索引
+      </a>
+    </h1>
+
+    <span class="post-date">18 Jan 2015</span>
+
+    <h2 id="section">简说</h2>
+
+<p>在理解索引时，可以想象一本书，其中书的内容就相当于表里的数据，而书前面的目录就相当于该表的索引。<br />
+同时，通常情况下，索引所占用的磁盘空间要比表要小得多，其主要作用是为了加快对数据的搜索速度，也可以用来保证数据的唯一性。<br />
+普遍运用在数据库和文件系统。</p>
+
+<p>索引作为一种可选的数据结构，你可以选择为某个表里的创建索引，也可以不创建。这是因为一旦创建了索引，就意味着数据库对表进行DML（包括INSERT、UPDATE、DELETE）时，必须处理额外的工作量（也就是对索引结构的维护）以及存储方面的开销。所以创建索引时，需要考虑创建索引所带来的查询性能方面的提高，与引起的额外的开销相比，是否值得。</p>
+
+<p>从物理上说，索引通常可以分为：常规B树索引、位图（bitmap）索引、翻转（reverse）索引等等…</p>
+
+<h2 id="b">B树索引</h2>
+
+<p>即二叉搜索树，也是一种树状数据结构；	<br />
+大量的数据库（如MySQL、oracle、PostgreSQL等）都在使用B树。B树索引本质上是对索引字段进行排序，然后通过类似二分查找的方法进行快速查找，即它要求索引的字段是可排序的，一般而言，可排序的是一维字段，比如时间、身份证号码  手机号码、QQ等等。</p>
+
+<p><strong>数据结构</strong>：
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/b.jpg" alt="" /></p>
+
+<p><strong>特点</strong>： 	<br />
+1. 索引不存储null值，单一索引不存储null值，复合索引不存储全为null的值；  <br />
+2. 不适合键值较少的列（重复数据较多的列）；比如时间、身份证、手机、QQ等  <br />
+3. 前导模糊查询不能利用索引(like ‘%XX’或者like ‘%XX%’)</p>
+
+<h2 id="section-1">位图索引</h2>
+
+<p>我们知道计算机所有信息最终都是通过“位bit”来运算的，二进制位运算在计算机中非常高效。而位图索引也是用0或1来处理索引进程，故得名位图索引。<br />
+位图索引主要针对大量相同值的列而创建的，索引块的一个索引行中存储键值、起止RowId及此键值的位图，根据位图信息可以得知每一条记录的ROWID。它为列的每个键值建立位图，位图中的每一位可能对应多个列，位图中位的值为1表示此行的值为对应的键值。</p>
+
+<p><strong>特点</strong>： 	<br />
+1. 可以存储null值；  <br />
+2. 不适合键值较多的列（重复数据较少的列）,适合只有几个固定值的列；如性别、婚姻状况、行政区等等   <br />
+3. 相对于B*Tree索引,占用的空间非常小,创建和使用非常快；  <br />
+4. 适合静态数据，而不适合索引频繁更新的列；  <br />
+5. 使用count、and、or或in查询时,直接用索引的位图进行或运算,快速得出结果行数据。  </p>
+
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    
+      <a class="pagination-item newer" href="/">Newer</a>
+    
+  
+</div>
+
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+      
+
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?462dfff9f03192fcf3c8194c48448b2e";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+
+    </script>
+  </body>
+</html>

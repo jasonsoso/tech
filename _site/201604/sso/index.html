@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+  <title>
+    
+      单点登录(SSO)概要设计 &middot; Jason技术流水账
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/style.css">
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/jason.jpg">
+  <link rel="shortcut icon" href="/public/favicon.ico">
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+  <body>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>@Jason,Java程序猿,2B青年,技术分享.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/">Home</a>
+
+    
+
+    
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/archive/">存档</a>
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/category/">分类</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/notes/">笔记</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href="/tag/">标签</a>
+        
+      
+    
+    <a class="sidebar-nav-item" href="https://github.com/jasonsoso/tech">GitHub project</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2016  Jason
+      <br/>
+      粤ICP备15021619号
+    </p>
+  </div>
+</div>
+
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">Jason技术流水账</a>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="post">
+  <h1 class="post-title">单点登录(SSO)概要设计</h1>
+  <span class="post-date">15 Apr 2016</span>
+  <h2 id="sso">第一章	： 单点登录(SSO)</h2>
+
+<h4 id="sso-1">SSO诞生的目标</h4>
+<ol>
+  <li>提高用户体验，提高用户的效率；</li>
+  <li>资源整合；</li>
+  <li>简化管理，降低了安全的风险和管理的消耗；</li>
+  <li>提高服务之间的合作效率</li>
+</ol>
+
+<h4 id="sso-2">SSO概述</h4>
+<ol>
+  <li>
+    <p>什么是SSO	<br />
+单点登录（ Single Sign-On , 简称 SSO ）是目前比较流行的服务于企业业务整合的解决方案之一， SSO 使得在多个应用系统中，用户只需要 登录一次 就可以访问所有相互信任的应用系统。</p>
+  </li>
+  <li>
+    <p>下图为SSO单点登录物理拓扑图	
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso1.png" alt="SSO单点登录物理拓扑图" title="SSO单点登录物理拓扑图" /></p>
+  </li>
+</ol>
+
+<h4 id="sso-3">SSO的技术的几种技术方案</h4>
+<ol>
+  <li>基于cookies实现<br />
+不支持跨域，不推荐</li>
+  <li>基于session共享来实现<br />
+捆绑容器，php与java互通相对麻烦，不推荐</li>
+  <li>基于身份验证票据ticket来实现<br />
+支持跨域，支持语言客户端，推荐</li>
+</ol>
+
+<h4 id="sso-4">SSO的技术机制</h4>
+
+<ol>
+  <li>基本原理：<br />
+当用户第一次访问应用系统1的时候，因为还没有登录，会被引导到认证系统中进行登录；根据用户提供的登录信息，认证系统进行身份校验，如果通过校验，应该返回给用户一个认证的凭据－－ticket；用户再访问别的应用的时候就会将这个ticket带上，作为自己认证的凭据，应用系统接受到请求之后会把ticket送到认证系统进行校验，检查ticket的合法性。如果通过校验，用户就可以在不用再次登录的情况下访问应用系统2和应用系统3了。</li>
+  <li>如图基本原理流程：
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso2.png" alt="基本原理" title="基本原理" /></li>
+</ol>
+
+<h2 id="sso--cas">第二章 ： SSO的实现 –– CAS</h2>
+
+<h4 id="cas">CAS简介</h4>
+<p>CAS 是 Yale 大学发起的一个开源项目，旨在为 Web 应用系统提供一种可靠的单点登录方法，CAS 在 2004 年 12 月正式成为 JA-SIG 的一个项目。</p>
+
+<p>CAS 具有以下特点：</p>
+
+<ol>
+  <li>开源的企业级单点登录解决方案。	</li>
+  <li>Java开源的、多协议的 SSO 解决方案； Protocols ： Custom Protocol 、 CAS 、 OAuth2 、 OpenID 、 RESTful API 、 SAML1.1 、 SAML2.0 等。</li>
+  <li>支持多种认证机制： Active Directory 、 JAAS 、 JDBC 、 LDAP 、 X.509 Certificates 等。</li>
+  <li> 	提供高可用性：通过把认证过的状态数据存储在 TicketRegistry 组件中，这些组件有很多支持分布式环境的实现，如： BerkleyDB 、 Default 、 EhcacheTicketRegistry 、 JDBCTicketRegistry 、 JBOSS </li>
+  <li>CAS Server 为需要独立部署的 Web 应用。</li>
+  <li>CAS Client 支持非常多的客户端(这里指单点登录系统中的各个 Web 应用)，包括 Java, .Net, PHP, Perl, Apache, uPortal, Ruby 等。</li>
+  <li>支持跨域单点登录，支持二级域名的单点登录。</li>
+</ol>
+
+<h4 id="cas-1">CAS架构体系</h4>
+
+<p><img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso3.png" alt="CAS架构体系" title="CAS架构体系" />	<br />
+	注意：详细请移步到http://jasig.github.io/cas/4.1.x/planning/Architecture.html</p>
+
+<h4 id="cas-2">CAS原理和协议</h4>
+
+<p><img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso4.png" alt="CAS原理和协议" title="CAS原理和协议" /></p>
+
+<h4 id="cas-">CAS 页面流程与场景</h4>
+
+<ol>
+  <li>以“广告系统”为入口
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso5.png" alt="" /> </li>
+  <li>以“运营系统”为入口
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso6.png" alt="" /></li>
+  <li>以“SSO系统”为入口
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso7.png" alt="" /></li>
+  <li>以“账户中心”为入口
+<img src="http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsso8.png" alt="" /></li>
+</ol>
+
+<p>注意：以上操作一个系统登录，则其他所有系统均可以访问，如果一个系统进行退出，则其他所有系统均已退出</p>
+
+<h2 id="section">第三章	：账户中心</h2>
+
+<h4 id="section-1">账户信息管理</h4>
+
+<ol>
+  <li>
+    <p>修改个人资料<br />
+此功能为修改当前登录者的个人资料，比如邮箱，性别等等。</p>
+  </li>
+  <li>
+    <p>修改登录密码<br />
+此功能为修改登录者的密码。</p>
+  </li>
+  <li>
+    <p>账户管理<br />
+此功能为有一定权限的账号才可以使用，就是管理全局的账户，针对账户进行新增，修改信息，修改密码，删除，锁定，解锁等等。还支持用户授权管理，针对账户授系统权限和角色权限等等。</p>
+  </li>
+</ol>
+
+<h4 id="section-2">账户权限管理</h4>
+
+<ol>
+  <li>
+    <p>角色管理<br />
+此功能为针对角色进行管理，具体给角色进行赋权。</p>
+  </li>
+  <li>
+    <p>权限资源管理<br />
+此功能为针对权限资源、菜单等进行管理。</p>
+  </li>
+</ol>
+
+<h2 id="section-3">第四章：技术选型</h2>
+
+<h4 id="sso--cas-1">单点登录SSO的实现 – CAS</h4>
+
+<p>详情请移步：<br />
+Cas官网：http://jasig.github.io/cas/4.1.x/index.html<br />
+Cas代码库：https://github.com/Jasig/cas<br />
+jasig CAS实现单点登录(数据库认证)：http://my.oschina.net/indestiny/blog/200768</p>
+
+<p>或者参考第二章</p>
+
+<h4 id="shiro">权限安全管理– shiro</h4>
+
+<p>详情请移步：<br />
+Shiro官网：http://shiro.apache.org/ <br />
+让Apache Shiro保护你的应用：http://www.infoq.com/cn/articles/apache-shiro<br />
+将 Shiro作为权限基础：http://www.ibm.com/developerworks/cn/opensource/os-cn-shiro/</p>
+
+
+  <div class="tags">
+    <a href="https://github.com/jasonsoso/tech/blob/gh-pages/_posts/2016-04-15-sso.md" class="pull-right">編輯</a> <a href="/tag/#单点登录">#单点登录</a> <a href="/tag/#架构">#架构</a> <a href="/tag/#CAS">#CAS</a> <a href="/tag/#Shiro">#Shiro</a> <a href="/tag/#SSO">#SSO</a> 
+  </div>
+</div>
+
+<div class="pagination">
+  
+  <a class="pagination-item older" href="/201512/elasticsearch">搜索引擎ElasticSearch</a>
+  
+  
+  <span class="pagination-item newer">Newer</span>
+  
+</div>
+
+
+<!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="/201604/sso" data-title="单点登录(SSO)概要设计" data-url="http://www.jasonsoso.com/201604/sso"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"jasonsoso"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- 多说公共JS代码 end -->
+
+      </div>
+    </div>
+
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+
+    <script>
+      (function(document) {
+        var toggle = document.querySelector('.sidebar-toggle');
+        var sidebar = document.querySelector('#sidebar');
+        var checkbox = document.querySelector('#sidebar-checkbox');
+
+        document.addEventListener('click', function(e) {
+          var target = e.target;
+
+          if(!checkbox.checked ||
+             sidebar.contains(target) ||
+             (target === checkbox || target === toggle)) return;
+
+          checkbox.checked = false;
+        }, false);
+      })(document);
+      
+
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?462dfff9f03192fcf3c8194c48448b2e";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+
+    </script>
+  </body>
+</html>
