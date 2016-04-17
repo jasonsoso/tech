@@ -10,10 +10,10 @@ permalink:        /:year:month/:title
 
 # Setup
 title:            Jason技术流水账
-tagline:          "Java程序猿 2B青年 技术分享"
-description:      '@Jason,Java程序猿,2B青年,技术分享.'
+tagline:          "Java高级程序猿 2B青年 技术分享"
+description:      '@Jason,Java高级程序猿,2B青年,技术分享.'
 baseurl:          ""
-url:              http://www.jasonsoso.com
+url:              http://tech.jasonsoso.com
 domain:           jasonsoso.com
 email:            648636045@qq.com
 #twitter_username: ztpala
@@ -34,3 +34,6 @@ paginate:         5
 
 github:
   repo:           https://github.com/jasonsoso/tech
+
+www:
+  repo:           http://www.jasonsoso.com

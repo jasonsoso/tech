@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Jason技术流水账</title>
- <link href="http://www.jasonsoso.com/atom.xml" rel="self"/>
- <link href="http://www.jasonsoso.com/"/>
- <updated>2016-04-16T06:45:13+08:00</updated>
- <id>http://www.jasonsoso.com</id>
+ <link href="http://tech.jasonsoso.com/atom.xml" rel="self"/>
+ <link href="http://tech.jasonsoso.com/"/>
+ <updated>2016-04-17T14:36:02+08:00</updated>
+ <id>http://tech.jasonsoso.com</id>
  <author>
    <name>Jason</name>
    <email></email>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>静态代码质量的几个建议</title>
-   <link href="http://www.jasonsoso.com/201604/static-code"/>
+   <link href="http://tech.jasonsoso.com/201604/static-code"/>
    <updated>2016-04-15T00:00:00+08:00</updated>
-   <id>http://www.jasonsoso.com/201604/static-code</id>
+   <id>http://tech.jasonsoso.com/201604/static-code</id>
    <content type="html">&lt;ol&gt;
   &lt;li&gt;
     &lt;p&gt;捕捉异常用Logger，不要直接e.printStackTrace();请用Logger，不要直接System.out.println();&lt;br /&gt;
@@ -81,9 +81,9 @@ if else 建议写上{}，个人习惯比较清晰和安全。
  
  <entry>
    <title>单点登录(SSO)概要设计</title>
-   <link href="http://www.jasonsoso.com/201604/sso"/>
+   <link href="http://tech.jasonsoso.com/201604/sso"/>
    <updated>2016-04-15T00:00:00+08:00</updated>
-   <id>http://www.jasonsoso.com/201604/sso</id>
+   <id>http://tech.jasonsoso.com/201604/sso</id>
    <content type="html">&lt;h2 id=&quot;sso&quot;&gt;第一章	： 单点登录(SSO)&lt;/h2&gt;
 
 &lt;h4 id=&quot;sso-1&quot;&gt;SSO诞生的目标&lt;/h4&gt;
@@ -227,9 +227,9 @@ OAuth 2.0官网：http://oauth.net/2/	&lt;br /&gt;
  
  <entry>
    <title>搜索引擎ElasticSearch</title>
-   <link href="http://www.jasonsoso.com/201512/elasticsearch"/>
+   <link href="http://tech.jasonsoso.com/201512/elasticsearch"/>
    <updated>2015-12-16T00:00:00+08:00</updated>
-   <id>http://www.jasonsoso.com/201512/elasticsearch</id>
+   <id>http://tech.jasonsoso.com/201512/elasticsearch</id>
    <content type="html">&lt;h2 id=&quot;section&quot;&gt;第一章	搜索引擎&lt;/h2&gt;
 
 &lt;h4 id=&quot;section-1&quot;&gt;搜索引擎简单结构&lt;/h4&gt;
@@ -433,9 +433,9 @@ elasticsearch.bat
  
  <entry>
    <title>Hadoop学习（一）Hadoop2.6.0伪分布式安装与配置</title>
-   <link href="http://www.jasonsoso.com/201505/install-hadoop"/>
+   <link href="http://tech.jasonsoso.com/201505/install-hadoop"/>
    <updated>2015-05-03T00:00:00+08:00</updated>
-   <id>http://www.jasonsoso.com/201505/install-hadoop</id>
+   <id>http://tech.jasonsoso.com/201505/install-hadoop</id>
    <content type="html">&lt;h2 id=&quot;section&quot;&gt;环境&lt;/h2&gt;
 
 &lt;h4 id=&quot;ubuntu-1404-lts--apt&quot;&gt;准备Ubuntu 14.04 LTS  并更新apt&lt;/h4&gt;
@@ -747,9 +747,9 @@ elasticsearch.bat
  
  <entry>
    <title>论框架设计(一)</title>
-   <link href="http://www.jasonsoso.com/201502/design-1"/>
+   <link href="http://tech.jasonsoso.com/201502/design-1"/>
    <updated>2015-02-06T00:00:00+08:00</updated>
-   <id>http://www.jasonsoso.com/201502/design-1</id>
+   <id>http://tech.jasonsoso.com/201502/design-1</id>
    <content type="html">&lt;h3 id=&quot;web&quot;&gt;Web&lt;/h3&gt;
 &lt;ol&gt;
   &lt;li&gt;MVC Framwork:&lt;a href=&quot;http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html&quot; title=&quot;SpringMVC&quot;&gt;SpringMVC&lt;/a&gt;，Restful的风格，对比Strus2更简单，更友好。&lt;/li&gt;
@@ -873,9 +873,9 @@ elasticsearch.bat
  
  <entry>
    <title>Gitbook（一）：从github到kindle</title>
-   <link href="http://www.jasonsoso.com/201502/gitbook-1"/>
+   <link href="http://tech.jasonsoso.com/201502/gitbook-1"/>
    <updated>2015-02-02T00:00:00+08:00</updated>
-   <id>http://www.jasonsoso.com/201502/gitbook-1</id>
+   <id>http://tech.jasonsoso.com/201502/gitbook-1</id>
    <content type="html">&lt;h2 id=&quot;section&quot;&gt;简说&lt;/h2&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.gitbook.io/&quot;&gt;gitbook&lt;/a&gt;是一个用于发布书籍的平台。  &lt;/p&gt;
@@ -956,9 +956,9 @@ Gitbook会使用其中的ebook-convert功能组件来完成书籍格式的转换
  
  <entry>
    <title>B树索引与位图索引</title>
-   <link href="http://www.jasonsoso.com/201501/B-tree-indexes-and-bitmap-indexes"/>
+   <link href="http://tech.jasonsoso.com/201501/B-tree-indexes-and-bitmap-indexes"/>
    <updated>2015-01-18T00:00:00+08:00</updated>
-   <id>http://www.jasonsoso.com/201501/B-tree-indexes-and-bitmap-indexes</id>
+   <id>http://tech.jasonsoso.com/201501/B-tree-indexes-and-bitmap-indexes</id>
    <content type="html">&lt;h2 id=&quot;section&quot;&gt;简说&lt;/h2&gt;
 
 &lt;p&gt;在理解索引时，可以想象一本书，其中书的内容就相当于表里的数据，而书前面的目录就相当于该表的索引。&lt;br /&gt;
