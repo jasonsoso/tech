@@ -28,7 +28,7 @@ tags:
 
 
 **数据结构**：
-![](http://7u2ivm.com1.z0.glb.clouddn.com/b.jpg)
+![](http://cdn.jasonsoso.com/b.jpg)
 
 
 **特点**： 	

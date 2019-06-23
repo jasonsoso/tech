@@ -1,3 +1,0 @@
-User-agent: *
-Disallow:
-Sitemap: http://tech.jasonsoso.com/sitemap.xml

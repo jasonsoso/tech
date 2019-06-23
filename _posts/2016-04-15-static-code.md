@@ -2,8 +2,7 @@
 layout: post
 title: 静态代码质量的几个建议
 tags:
-    - 静态代码
-    - 建议
+    - 代码审核
 ---
 
 
@@ -15,31 +14,31 @@ logger.info 用于线上，记录重要的信息。
 logger.debug 用于开发，trycatch异常，比较常用。
 logger.warn 用于是否稳定。
 logger.error 用于系统错误，属于高级别。
-![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc1.png) 
+![](http://cdn.jasonsoso.com/2016/sc1.png) 
 
-2.	请用面向接口，比如以下java常用类：Map<String, String> priceUnitsMap = new HashMap<String, String>();Set employees = new HashSet()；![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc2.png) 
+2.	请用面向接口，比如以下java常用类：Map<String, String> priceUnitsMap = new HashMap<String, String>();Set employees = new HashSet()；![](http://cdn.jasonsoso.com/2016/sc2.png) 
 
-3. 	针对常量，进行比较，请常量放左边，变量放右边进行比较，预防空指针;int类型请用==进行比较对比，String请用equals进行比较对比！![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc3.png) 
+3. 	针对常量，进行比较，请常量放左边，变量放右边进行比较，预防空指针;int类型请用==进行比较对比，String请用equals进行比较对比！![](http://cdn.jasonsoso.com/2016/sc3.png) 
 
 4.	针对方法，请删除无用的参数
-![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc4.png) 
+![](http://cdn.jasonsoso.com/2016/sc4.png) 
 
 5.	类的命名：必须由大写字母开头而其他字母都小写的单词组成；如果两个单词组合而成，则两个单词首字母为大写，其他为小写，不使用拼音，如DataUtil。
 方法的命名：方法名应该是动词，大小写可混用，但首字母应小写。在每个方法名内，大写字母将词分隔，如：send，sendMessage。
 变量的命名：变量的名字可大小写混用，但首字符应小写。词由大写字母分隔。
 数组的命名：数组应该总是用下面的方式来命名：byte[] buffer;而不是byte buffer[]。
 常量的命名：统一大写，复合词则用下划线连接，如：IREE_PORT;
-![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc5.png) 
-![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc5-2.png) 
+![](http://cdn.jasonsoso.com/2016/sc5.png) 
+![](http://cdn.jasonsoso.com/2016/sc5-2.png) 
 
 
 6.	 删除无用的变量，或者是import，或者是局部变量
-![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6.png)![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6-2.png)![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc6-3.png) 
+![](http://cdn.jasonsoso.com/2016/sc6.png)![](http://cdn.jasonsoso.com/2016/sc6-2.png)![](http://cdn.jasonsoso.com/2016/sc6-3.png) 
 	
 
 7.	 一律用大括号括住 if 和 loop 语句
 if else 建议写上{}，个人习惯比较清晰和安全。
-![](http://7u2ivm.com1.z0.glb.clouddn.com/%40%2F2016%2Fsc7.png) 
+![](http://cdn.jasonsoso.com/%40%2F2016%2Fsc7.png) 
 
 8. 注释几点说明：
 	1.	 内容要简单、明了、含义准确，防止注释的多义性。

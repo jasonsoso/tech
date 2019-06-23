@@ -1,74 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>http://tech.jasonsoso.com/201604/static-code</loc>
-    <lastmod>2016-04-15T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/201604/sso</loc>
-    <lastmod>2016-04-15T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/201512/elasticsearch</loc>
-    <lastmod>2015-12-16T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/201505/install-hadoop</loc>
-    <lastmod>2015-05-03T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/201502/design-1</loc>
-    <lastmod>2015-02-06T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/201502/gitbook-1</loc>
-    <lastmod>2015-02-02T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/201501/B-tree-indexes-and-bitmap-indexes</loc>
-    <lastmod>2015-01-18T00:00:00+08:00</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/404.html</loc>
-    <lastmod>2016-05-02T11:14:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/archive/</loc>
-    <lastmod>2016-05-02T11:14:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/category/</loc>
-    <lastmod>2016-05-02T11:14:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/</loc>
-    <lastmod>2016-05-02T11:14:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/search/</loc>
-    <lastmod>2016-05-02T11:14:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>http://tech.jasonsoso.com/tag/</loc>
-    <lastmod>2016-05-02T11:14:27+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
+<url>
+<loc>http://localhost:4000/2015/01/B-tree-indexes-and-bitmap-indexes/</loc>
+<lastmod>2015-01-18T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2015/02/gitbook-1/</loc>
+<lastmod>2015-02-02T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2015/02/design-1/</loc>
+<lastmod>2015-02-06T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2015/05/install-hadoop/</loc>
+<lastmod>2015-05-03T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2015/12/elasticsearch/</loc>
+<lastmod>2015-12-16T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2016/04/sso/</loc>
+<lastmod>2016-04-15T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/2016/04/static-code/</loc>
+<lastmod>2016-04-15T00:00:00+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/about/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/archive/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/tags/</loc>
+</url>
 </urlset>

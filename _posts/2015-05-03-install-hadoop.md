@@ -241,17 +241,17 @@ tags:
 
 启动后，用命令`jps`检查是否启动
 
-![](http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/start-all.png)
+![](http://cdn.jasonsoso.com/2015/start-all.png)
 
 
 
 访问HDFD的NameNode url `http://hadoop-yarn.jasonsoso.com:50070/`
 
-![](http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/50070.png)
+![](http://cdn.jasonsoso.com/2015/50070.png)
 
 访问HDFD的Secondary NameNode  url `http://hadoop-yarn.jasonsoso.com:50090/`
 
-![](http://7u2ivm.com1.z0.glb.clouddn.com/@/2015/50090.png)
+![](http://cdn.jasonsoso.com/2015/50090.png)
 
 
 
