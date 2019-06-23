@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>单点登录(SSO)概要设计</title>
+  <meta name="description" content="第一章	： 单点登录(SSO)">
+  <meta name="author" content="leopardpan">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="单点登录(SSO)概要设计">
+  <meta name="twitter:description" content="第一章	： 单点登录(SSO)">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="单点登录(SSO)概要设计">
+  <meta property="og:description" content="第一章	： 单点登录(SSO)">
+  
+  <link rel="icon" type="image/png" href="/images/favicon.png" />
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2016/04/sso/">
+  <link rel="alternate" type="application/rss+xml" title="潘柏信" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+
+<!-- 站点统计 -->
+  <script 
+  async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  </script>  
+
+<!-- 百度统计 -->
+  
+  <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?xxxx";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+  </script>
+  
+
+<!-- google 统计 -->
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'xxxx', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+
+  <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-9005224472374751",
+    enable_page_level_ads: true
+  });
+</script>
+
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">        
+      <div class="nav_container">
+         <nav class="nav-menu-item" style = "float:right">
+            <i class="nav-menu-item">
+              <a href="/#blog" title="" class="blog-button">  博客主页
+              </a>
+            </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/archive" title="archive" class="btn-mobile-menu__icon">
+                      所有文章
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/tags" title="tags" class="btn-mobile-menu__icon">
+                      标签
+                  </a>
+                </i>
+            
+                <i class="nav-menu-item">
+
+                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                      关于我
+                  </a>
+                </i>
+            
+          </nav>
+      </div>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+        <!-- 头像效果-start -->
+        <div class="ih-item circle effect right_to_left">            
+            <a href="/#blog" title="前往 潘柏信 的主页" class="blog-button">
+                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+                <div class="info">
+                    <div class="info-back">
+                        <h2> 
+                            
+                                leopardpan
+                            
+                        </h2>
+                        <p>
+                           
+                                iOS / 机器学习
+                            
+                        </p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 头像效果-end -->
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 潘柏信" class="blog-button">潘柏信</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        
+
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客主页</a></li>
+                
+                  <li class="navigation__item"><a href="/archive" title="archive">所有文章</a></li>
+                
+                  <li class="navigation__item"><a href="/tags" title="tags">标签</a></li>
+                
+                  <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                
+              </ul>
+            </nav>
+          </div>          
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-clear"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <h1 class="post-title">单点登录(SSO)概要设计</h1>
+    <div class="post-meta">
+      <img src="/images/calendar.png" width="20px"/> 
+      <time datetime="2016-04-15 00:00:00 +0800" itemprop="datePublished" class="post-meta__date date">2016-04-15</time>  
+         
+      <span id="busuanzi_container_page_pv"> | 阅读：<span id="busuanzi_value_page_pv"></span>次</span>
+    </p>
+    </div>
+  </header>
+
+  <section class="post">
+    <h2 id="第一章--单点登录sso">第一章	： 单点登录(SSO)</h2>
+
+<h4 id="sso诞生的目标">SSO诞生的目标</h4>
+<ol>
+  <li>提高用户体验，提高用户的效率；</li>
+  <li>资源整合；</li>
+  <li>简化管理，降低了安全的风险和管理的消耗；</li>
+  <li>提高服务之间的合作效率</li>
+</ol>
+
+<h4 id="sso概述">SSO概述</h4>
+<ol>
+  <li>
+    <p>什么是SSO	
+单点登录（ Single Sign-On , 简称 SSO ）是目前比较流行的服务于企业业务整合的解决方案之一， SSO 使得在多个应用系统中，用户只需要 登录一次 就可以访问所有相互信任的应用系统。</p>
+  </li>
+  <li>
+    <p>下图为SSO单点登录物理拓扑图	
+<img src="http://cdn.jasonsoso.com//2016/sso1.png" alt="SSO单点登录物理拓扑图" title="SSO单点登录物理拓扑图" /></p>
+  </li>
+</ol>
+
+<h4 id="sso的技术的几种技术方案">SSO的技术的几种技术方案</h4>
+<ol>
+  <li>基于cookies实现
+不支持跨域，不推荐</li>
+  <li>基于session共享来实现
+捆绑容器，php与java互通相对麻烦，不推荐</li>
+  <li>基于身份验证票据ticket来实现
+支持跨域，支持语言客户端，推荐</li>
+</ol>
+
+<h4 id="sso的技术机制">SSO的技术机制</h4>
+
+<ol>
+  <li>基本原理：
+当用户第一次访问应用系统1的时候，因为还没有登录，会被引导到认证系统中进行登录；根据用户提供的登录信息，认证系统进行身份校验，如果通过校验，应该返回给用户一个认证的凭据－－ticket；用户再访问别的应用的时候就会将这个ticket带上，作为自己认证的凭据，应用系统接受到请求之后会把ticket送到认证系统进行校验，检查ticket的合法性。如果通过校验，用户就可以在不用再次登录的情况下访问应用系统2和应用系统3了。</li>
+  <li>如图基本原理流程：
+<img src="http://cdn.jasonsoso.com//2016/sso2.png" alt="基本原理" title="基本原理" /></li>
+</ol>
+
+<h2 id="第二章--sso的实现--cas">第二章 ： SSO的实现 –– CAS##</h2>
+
+<h4 id="cas简介">CAS简介</h4>
+<p>CAS 是 Yale 大学发起的一个开源项目，旨在为 Web 应用系统提供一种可靠的单点登录方法，CAS 在 2004 年 12 月正式成为 JA-SIG 的一个项目。</p>
+
+<p>CAS 具有以下特点：</p>
+
+<ol>
+  <li>开源的企业级单点登录解决方案。</li>
+  <li>Java开源的、多协议的 SSO 解决方案； Protocols ： Custom Protocol 、 CAS 、 OAuth2 、 OpenID 、 RESTful API 、 SAML1.1 、 SAML2.0 等。</li>
+  <li>支持多种认证机制： Active Directory 、 JAAS 、 JDBC 、 LDAP 、 X.509 Certificates 等。</li>
+  <li> 	提供高可用性：通过把认证过的状态数据存储在 TicketRegistry 组件中，这些组件有很多支持分布式环境的实现，如： BerkleyDB 、 Default 、 EhcacheTicketRegistry 、 JDBCTicketRegistry 、 JBOSS </li>
+  <li>CAS Server 为需要独立部署的 Web 应用。</li>
+  <li>CAS Client 支持非常多的客户端(这里指单点登录系统中的各个 Web 应用)，包括 Java, .Net, PHP, Perl, Apache, uPortal, Ruby 等。</li>
+  <li>支持跨域单点登录，支持二级域名的单点登录。</li>
+</ol>
+
+<h4 id="cas架构体系">CAS架构体系</h4>
+
+<p><img src="http://cdn.jasonsoso.com//2016/sso3.png" alt="CAS架构体系" title="CAS架构体系" />	
+	注意：详细请移步到http://jasig.github.io/cas/4.1.x/planning/Architecture.html</p>
+
+<h4 id="cas原理和协议">CAS原理和协议</h4>
+
+<p><img src="http://cdn.jasonsoso.com//2016/sso4.png" alt="CAS原理和协议" title="CAS原理和协议" /></p>
+
+<h4 id="cas-页面流程与场景">CAS 页面流程与场景</h4>
+
+<ol>
+  <li>以“广告系统”为入口
+<img src="http://cdn.jasonsoso.com//2016/sso5.png" alt="" /></li>
+  <li>以“运营系统”为入口
+<img src="http://cdn.jasonsoso.com//2016/sso6.png" alt="" /></li>
+  <li>以“SSO系统”为入口
+<img src="http://cdn.jasonsoso.com//2016/sso7.png" alt="" /></li>
+  <li>以“账户中心”为入口
+<img src="http://cdn.jasonsoso.com//2016/sso8.png" alt="" /></li>
+</ol>
+
+<p>注意：以上操作一个系统登录，则其他所有系统均可以访问，如果一个系统进行退出，则其他所有系统均已退出</p>
+
+<h2 id="第三章-账户中心">第三章	：账户中心</h2>
+
+<h4 id="账户信息管理">账户信息管理</h4>
+
+<ol>
+  <li>
+    <p>修改个人资料
+此功能为修改当前登录者的个人资料，比如邮箱，性别等等。</p>
+  </li>
+  <li>
+    <p>修改登录密码
+此功能为修改登录者的密码。</p>
+  </li>
+  <li>
+    <p>账户管理
+此功能为有一定权限的账号才可以使用，就是管理全局的账户，针对账户进行新增，修改信息，修改密码，删除，锁定，解锁等等。还支持用户授权管理，针对账户授系统权限和角色权限等等。</p>
+  </li>
+</ol>
+
+<h4 id="账户权限管理">账户权限管理</h4>
+
+<ol>
+  <li>
+    <p>角色管理
+此功能为针对角色进行管理，具体给角色进行赋权。</p>
+  </li>
+  <li>
+    <p>权限资源管理
+此功能为针对权限资源、菜单等进行管理。</p>
+  </li>
+</ol>
+
+<h2 id="第四章技术选型">第四章：技术选型</h2>
+
+<h4 id="单点登录sso的实现--cas">单点登录SSO的实现 – CAS</h4>
+
+<p>详情请移步：
+Cas官网：http://jasig.github.io/cas/4.1.x/index.html
+Cas代码库：https://github.com/Jasig/cas
+jasig CAS实现单点登录(数据库认证)：http://my.oschina.net/indestiny/blog/200768</p>
+
+<p>或者参考第二章</p>
+
+<h4 id="权限安全管理-shiro">权限安全管理– shiro</h4>
+
+<p>详情请移步：
+Shiro官网：http://shiro.apache.org/ 
+让Apache Shiro保护你的应用：http://www.infoq.com/cn/articles/apache-shiro
+将 Shiro作为权限基础：http://www.ibm.com/developerworks/cn/opensource/os-cn-shiro/</p>
+
+<h4 id="第三方应用登录--oauth-20-协议">第三方应用登录 – OAuth 2.0 协议</h4>
+
+<p>详情请移步：
+OAuth 2.0官网：http://oauth.net/2/	
+理解OAuth 2.0：http://www.ruanyifeng.com/blog/2014/05/oauth_2_0.html</p>
+
+
+
+  </section>
+</article>
+
+<section>
+
+            <div class="content-play">
+              <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang" title="打赏，支持一下">打赏一个呗</a></p>
+              <div class="hide_box-play"></div>
+              <div class="shang_box-play">
+                <a class="shang_close-play" href="javascript:void(0)" onclick="dashangToggle()" title="关闭"><img src="/images/payimg/close.jpg" alt="取消" /></a>
+                <div class="shang_tit-play">
+                  <p>感谢您的支持，我会继续努力的!</p>
+                </div>
+                <div class="shang_payimg">
+                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+              <div class="shang_payimg">    
+                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                </div>
+                <div class="pay_explain">扫码打赏，你说多少就多少</div>
+                <div class="shang_payselect">
+                  <div class="pay_item checked" data-id="alipay">
+                    <span class="pay_logo"><img src="/images/payimg/alipay.jpg" alt="支付宝" /></span>
+                  </div>
+                  <div class="pay_item" data-id="weipay">
+                    <span class="pay_logo"><img src="/images/payimg/wechat.jpg" alt="微信" /></span>
+                  </div>
+                </div>
+                <div class="shang_info-play">
+                  <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+                </div>
+              </div>
+            </div>
+            <script type="text/javascript">
+            function dashangToggle(){
+              $(".hide_box-play").fadeToggle();
+              $(".shang_box-play").fadeToggle();
+            }
+            </script>
+
+            <div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';"></div>
+
+            <style type="text/css">
+              .content-play{width:80%;margin-top: 20px;margin-bottom: 10px;height:40px;}
+              .hide_box-play{z-index:999;filter:alpha(opacity=50);background:#666;opacity: 0.5;-moz-opacity: 0.5;left:0;top:0;height:99%;width:100%;position:fixed;display:none;}
+              .shang_box-play{width:540px;height:540px;padding:10px;background-color:#fff;border-radius:10px;position:fixed;z-index:1000;left:50%;top:50%;margin-left:-280px;margin-top:-280px;border:1px dotted #dedede;display:none;}
+              .shang_box-play img{border:none;border-width:0;}
+              .dashang{display:block;width:100px;margin:5px auto;height:25px;line-height:25px;padding:10px;background-color:#E74851;color:#fff;text-align:center;text-decoration:none;border-radius:10px;font-weight:bold;font-size:16px;transition: all 0.3s;}
+              .dashang:hover{opacity:0.8;padding:15px;font-size:18px;}
+              .shang_close-play{float:right;display:inline-block;
+                margin-right: 10px;margin-top: 20px;
+              }
+              .shang_logo{display:block;text-align:center;margin:20px auto;}
+              .shang_tit-play{width: 100%;height: 75px;text-align: center;line-height: 66px;color: #a3a3a3;font-size: 16px;background: url('/images/payimg/cy-reward-title-bg.jpg');font-family: 'Microsoft YaHei';margin-top: 7px;margin-right:2px;}
+              .shang_tit-play p{color:#a3a3a3;text-align:center;font-size:16px;}
+              .shang_payimg{width:140px;padding:10px;padding-left: 80px; /*border:6px solid #EA5F00;**/margin:0 auto;border-radius:3px;height:140px;display:inline-block;}
+              .shang_payimg img{display:inline-block;margin-right:10px;float:left;text-align:center;width:140px;height:140px; }
+              .pay_explain{text-align:center;margin:10px auto;font-size:12px;color:#545454;}
+              .shang_payselect{text-align:center;margin:0 auto;margin-top:40px;cursor:pointer;height:60px;width:500px;margin-left:110px;}
+              .shang_payselect .pay_item{display:inline-block;margin-right:140px;float:left;}
+              .shang_info-play{clear:both;}
+              .shang_info-play p,.shang_info-play a{color:#C3C3C3;text-align:center;font-size:12px;text-decoration:none;line-height:2em;}
+            </style>
+
+       <ul class="pager">
+        
+        <li class="previous">
+            <a href="/2015/12/elasticsearch/" data-toggle="tooltip" data-placement="top" title="搜索引擎ElasticSearch">上一篇：  <span>搜索引擎ElasticSearch</span>
+            </a>
+        </li>
+        
+        
+        <li class="next">
+            <a href="/2016/04/static-code/" data-toggle="tooltip" data-placement="top" title="静态代码质量的几个建议">下一篇：  <span>静态代码质量的几个建议</span>
+            </a>
+        </li>
+        
+    </ul>
+</section>
+
+<section class="post-comments">
+
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2016/04/sso/";
+        this.page.identifier = "/2016/04/sso/";
+    };
+    var disqus_shortname = 'leopard';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+
+  
+
+</section>
+
+
+            <section class="footer">
+    <footer>
+        <div class = "footer_div">  
+        <nav class="cover-navigation navigation--social">
+          <ul class="navigation">
+
+          
+          <!-- Github -->
+          <li class="navigation__item_social">
+            <a href="https://github.com/leopardpan" title="@leopardpan 的 Github" target="_blank">
+              <div class="footer-social-icon" style="background:url(/images/github.png);"></div>
+            </a>
+          </li>
+          
+
+          
+
+          
+
+          
+          <!-- Zhihu -->
+          <li class="navigation__item_social">
+            <a href="https://www.jianshu.com/u/2ada30d8d0f7" title="@2ada30d8d0f7" target="_blank">
+              <div class="footer-social-icon" style="background:url(/images/jianshu.png);"></div>
+            </a>
+          </li>
+
+          
+
+          
+          <!-- Weibo -->
+          <li class="navigation__item_social">
+            <a href="http://weibo.com/5366874726" title="@5366874726 的微博" target="_blank">
+              <div class="footer-social-icon" style="background:url(/images/weibo.png);"></div>
+            </a>
+          </li>
+          
+
+          
+          
+
+
+          
+          <!-- Email -->
+          <li class="navigation__item_social">
+            <a href="mailto:leopardpan@icloud.com" title="Contact me">
+              <div class="footer-social-icon" style="background:url(/images/email.png);"></div>
+            </a>
+          </li>
+          
+          
+          <!-- RSS -->
+          <li class="navigation__item_social">
+            <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+              <div class="footer-social-icon" style="background:url(/images/rss.png);"></div>
+              <span class="label">RSS</span>
+            </a>
+          </li>
+
+          </ul>
+        </nav>
+
+        </div>
+
+        <div class = "footer_div">  
+           <p class="copyright text-muted">
+            Copyright &copy; 潘柏信 2019 Theme by <a href="http://baixin.io/">leopardpan</a> |
+            <iframe
+                style="margin-left: 2px; margin-bottom:-5px;"
+                frameborder="0" scrolling="0" width="91px" height="20px"
+                src="https://ghbtns.com/github-btn.html?user=leopardpan&repo=leopardpan.github.io&type=star&count=true" >
+            </iframe>
+            </p>
+        	<div align="right">
+    			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+          <!-- 访问统计 -->
+          <span id="busuanzi_container_site_pv">
+            本站总访问量
+            <span id="busuanzi_value_site_pv"></span>次
+          </span>
+
+        </div>
+        <div>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<script type="text/javascript" src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+  </body>
+
+</html>
