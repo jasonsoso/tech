@@ -7,7 +7,7 @@ tags:
     - 大数据
 ---
 
-## 环境 ##
+### 环境 ###
 
 #### 准备Ubuntu 14.04 LTS  并更新apt ####
 
@@ -91,7 +91,7 @@ tags:
 4. 如果做集群，则配置SSH无密码登陆，实现多机器互通
 
 
-## hadoop2.6.0安装 ##
+### hadoop2.6.0安装 ###
 1. 下载hadoop2.6.0	
 	官网hadoop下载http://hadoop.apache.org/releases.html
 2. 解压tar包	
@@ -100,7 +100,7 @@ tags:
 3. 修改文件权限
 	`sudo chown -R hadoop:hadoop ./hadoop-2.6.0`
 
-## 配置 ##
+### 配置 ###
 1. 配置环境变量	
 下面`#set Hadoop`才是真正的hadoop配置，而`#set java environment`是必须的java环境变量，`#set findbugs`、`#set ant`、`#PROTOBUF`和`#set maven environment`是编译hadoop代码必须的，现在没有编译hadoop源码，只需要java环境和hadoop环境足矣。
 		 		
@@ -203,7 +203,7 @@ tags:
 		</property>
 
 
-## 启动 ##
+### 启动 ###
 1. 启动HDFS(NameNode、DataNode、SecondaryNameNode)
 	
 	- NameNode 格式化	
@@ -237,7 +237,7 @@ tags:
 
 
 
-## 实例与测试 ##
+### 实例与测试 ###
 
 启动后，用命令`jps`检查是否启动
 
@@ -255,7 +255,7 @@ tags:
 
 
 
-## 本文配置主要是为伪布式，那么Hadoop 集群的安装配置大致为如下: ##
+### 本文配置主要是为伪布式，那么Hadoop 集群的安装配置大致为如下: ###
 
 1. 选定一台机器作为 Master 主节点
 2. 在 Master 主机上配置hadoop用户、安装SSH server、安装Java环境

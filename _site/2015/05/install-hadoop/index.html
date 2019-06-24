@@ -25,7 +25,7 @@
   <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 
   <link rel="canonical" href="http://localhost:4000/2015/05/install-hadoop/">
-  <link rel="alternate" type="application/rss+xml" title="潘柏信" href="http://localhost:4000/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Jason" href="http://localhost:4000/feed.xml">
   
   <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
 
@@ -96,7 +96,7 @@
             
                 <i class="nav-menu-item">
 
-                  <a href="/about" title="about" class="btn-mobile-menu__icon">
+                  <a href="http://www.jasonsoso.com/" title="about" class="btn-mobile-menu__icon">
                       关于我
                   </a>
                 </i>
@@ -112,18 +112,18 @@
     <div class="panel-main__content">
         <!-- 头像效果-start -->
         <div class="ih-item circle effect right_to_left">            
-            <a href="/#blog" title="前往 潘柏信 的主页" class="blog-button">
-                <div class="img"><img src="/images/avatar.jpg" alt="img"></div>
+            <a href="/#blog" title="前往 Jason 的主页" class="blog-button">
+                <div class="img"><img src="/images/jason.jpg" alt="img"></div>
                 <div class="info">
                     <div class="info-back">
                         <h2> 
                             
-                                leopardpan
+                                Jason
                             
                         </h2>
                         <p>
                            
-                                iOS / 机器学习
+                                Java
                             
                         </p>
                     </div>
@@ -131,12 +131,12 @@
             </a>
         </div>
         <!-- 头像效果-end -->
-        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for 潘柏信" class="blog-button">潘柏信</a></h1>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for Jason" class="blog-button">Jason</a></h1>
         
-        <span class="panel-cover__subtitle panel-subtitle">个人站</span>
+        <span class="panel-cover__subtitle panel-subtitle">技术流水账</span>
         
         <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">欢迎来到我的个人站~</p>
+        <p class="panel-cover__description">欢迎来到我的技术流水账~</p>
         <hr class="panel-cover__divider panel-cover__divider--secondary" />
         
         
@@ -152,7 +152,7 @@
                 
                   <li class="navigation__item"><a href="/tags" title="tags">标签</a></li>
                 
-                  <li class="navigation__item"><a href="/about" title="about">关于我</a></li>
+                  <li class="navigation__item"><a href="http://www.jasonsoso.com/" title="about">关于我</a></li>
                 
               </ul>
             </nav>
@@ -186,7 +186,7 @@
   </header>
 
   <section class="post">
-    <h2 id="环境">环境</h2>
+    <h3 id="环境">环境</h3>
 
 <h4 id="准备ubuntu-1404-lts--并更新apt">准备Ubuntu 14.04 LTS  并更新apt</h4>
 
@@ -282,7 +282,7 @@
   <li>如果做集群，则配置SSH无密码登陆，实现多机器互通</li>
 </ol>
 
-<h2 id="hadoop260安装">hadoop2.6.0安装</h2>
+<h3 id="hadoop260安装">hadoop2.6.0安装</h3>
 <ol>
   <li>下载hadoop2.6.0	
  官网hadoop下载http://hadoop.apache.org/releases.html</li>
@@ -293,7 +293,7 @@
  <code class="highlighter-rouge">sudo chown -R hadoop:hadoop ./hadoop-2.6.0</code></li>
 </ol>
 
-<h2 id="配置">配置</h2>
+<h3 id="配置">配置</h3>
 <ol>
   <li>配置环境变量	
 下面<code class="highlighter-rouge">#set Hadoop</code>才是真正的hadoop配置，而<code class="highlighter-rouge">#set java environment</code>是必须的java环境变量，<code class="highlighter-rouge">#set findbugs</code>、<code class="highlighter-rouge">#set ant</code>、<code class="highlighter-rouge">#PROTOBUF</code>和<code class="highlighter-rouge">#set maven environment</code>是编译hadoop代码必须的，现在没有编译hadoop源码，只需要java环境和hadoop环境足矣。</li>
@@ -408,7 +408,7 @@
   </li>
 </ol>
 
-<h2 id="启动">启动</h2>
+<h3 id="启动">启动</h3>
 <ol>
   <li>
     <p>启动HDFS(NameNode、DataNode、SecondaryNameNode)</p>
@@ -456,7 +456,7 @@
   </li>
 </ol>
 
-<h2 id="实例与测试">实例与测试</h2>
+<h3 id="实例与测试">实例与测试</h3>
 
 <p>启动后，用命令<code class="highlighter-rouge">jps</code>检查是否启动</p>
 
@@ -470,7 +470,7 @@
 
 <p><img src="http://cdn.jasonsoso.com/2015/50090.png" alt="" /></p>
 
-<h2 id="本文配置主要是为伪布式那么hadoop-集群的安装配置大致为如下">本文配置主要是为伪布式，那么Hadoop 集群的安装配置大致为如下:</h2>
+<h3 id="本文配置主要是为伪布式那么hadoop-集群的安装配置大致为如下">本文配置主要是为伪布式，那么Hadoop 集群的安装配置大致为如下:</h3>
 
 <ol>
   <li>选定一台机器作为 Master 主节点</li>
@@ -508,10 +508,10 @@
                   <p>感谢您的支持，我会继续努力的!</p>
                 </div>
                 <div class="shang_payimg">
-                    <img src="/images/payimg/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                    <img src="/images/payimg/zhifubao.jpg" alt="扫码支持" title="扫一扫" />
                 </div>
               <div class="shang_payimg">    
-                    <img src="/images/payimg/weipayimg.jpg" alt="扫码支持" title="扫一扫" />
+                    <img src="/images/payimg/weixin.jpg" alt="扫码支持" title="扫一扫" />
                 </div>
                 <div class="pay_explain">扫码打赏，你说多少就多少</div>
                 <div class="shang_payselect">
@@ -610,7 +610,7 @@
           
           <!-- Github -->
           <li class="navigation__item_social">
-            <a href="https://github.com/leopardpan" title="@leopardpan 的 Github" target="_blank">
+            <a href="https://github.com/jasonsoso" title="@jasonsoso 的 Github" target="_blank">
               <div class="footer-social-icon" style="background:url(/images/github.png);"></div>
             </a>
           </li>
@@ -621,19 +621,11 @@
           
 
           
-          <!-- Zhihu -->
-          <li class="navigation__item_social">
-            <a href="https://www.jianshu.com/u/2ada30d8d0f7" title="@2ada30d8d0f7" target="_blank">
-              <div class="footer-social-icon" style="background:url(/images/jianshu.png);"></div>
-            </a>
-          </li>
-
-          
 
           
           <!-- Weibo -->
           <li class="navigation__item_social">
-            <a href="http://weibo.com/5366874726" title="@5366874726 的微博" target="_blank">
+            <a href="http://weibo.com/tanjianna" title="@tanjianna 的微博" target="_blank">
               <div class="footer-social-icon" style="background:url(/images/weibo.png);"></div>
             </a>
           </li>
@@ -646,7 +638,7 @@
           
           <!-- Email -->
           <li class="navigation__item_social">
-            <a href="mailto:leopardpan@icloud.com" title="Contact me">
+            <a href="mailto:648636045@qq.com" title="Contact me">
               <div class="footer-social-icon" style="background:url(/images/email.png);"></div>
             </a>
           </li>
@@ -667,21 +659,21 @@
 
         <div class = "footer_div">  
            <p class="copyright text-muted">
-            Copyright &copy; 潘柏信 2019 Theme by <a href="http://baixin.io/">leopardpan</a> |
-            <iframe
+            Copyright &copy; Jason 2015-2019 Theme by <a href="http://tech.jasonsoso.com/">jasonsoso</a> 
+            <!-- | <iframe
                 style="margin-left: 2px; margin-bottom:-5px;"
                 frameborder="0" scrolling="0" width="91px" height="20px"
                 src="https://ghbtns.com/github-btn.html?user=leopardpan&repo=leopardpan.github.io&type=star&count=true" >
-            </iframe>
+            </iframe>-->
             </p>
         	<div align="right">
     			<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
           <!-- 访问统计 -->
-          <span id="busuanzi_container_site_pv">
+          <!--<span id="busuanzi_container_site_pv">
             本站总访问量
             <span id="busuanzi_value_site_pv"></span>次
-          </span>
+          </span>-->
 
         </div>
         <div>

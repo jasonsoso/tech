@@ -1,88 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>潘柏信</title>
-    <description>欢迎来到我的个人站~</description>
+    <title>Jason</title>
+    <description>欢迎来到我的技术流水账~</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 23 Jun 2019 17:07:51 +0800</pubDate>
-    <lastBuildDate>Sun, 23 Jun 2019 17:07:51 +0800</lastBuildDate>
+    <pubDate>Mon, 24 Jun 2019 10:32:44 +0800</pubDate>
+    <lastBuildDate>Mon, 24 Jun 2019 10:32:44 +0800</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
-        <title>静态代码质量的几个建议</title>
-        <description>&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;捕捉异常用Logger，不要直接e.printStackTrace();请用Logger，不要直接System.out.println();
-避免在正式程序代码中使用 System.out 或 System.err 或者 main方法，如果想测试，则写测试用例junit
-Logger日志等级如下：
-logger.info 用于线上，记录重要的信息。
-logger.debug 用于开发，trycatch异常，比较常用。
-logger.warn 用于是否稳定。
-logger.error 用于系统错误，属于高级别。
-&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;请用面向接口，比如以下java常用类：Map&amp;lt;String, String&amp;gt; priceUnitsMap = new HashMap&amp;lt;String, String&amp;gt;();Set employees = new HashSet()；&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;针对常量，进行比较，请常量放左边，变量放右边进行比较，预防空指针;int类型请用==进行比较对比，String请用equals进行比较对比！&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;针对方法，请删除无用的参数
-&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc4.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;类的命名：必须由大写字母开头而其他字母都小写的单词组成；如果两个单词组合而成，则两个单词首字母为大写，其他为小写，不使用拼音，如DataUtil。
-方法的命名：方法名应该是动词，大小写可混用，但首字母应小写。在每个方法名内，大写字母将词分隔，如：send，sendMessage。
-变量的命名：变量的名字可大小写混用，但首字符应小写。词由大写字母分隔。
-数组的命名：数组应该总是用下面的方式来命名：byte[] buffer;而不是byte buffer[]。
-常量的命名：统一大写，复合词则用下划线连接，如：IREE_PORT;
-&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc5.png&quot; alt=&quot;&quot; /&gt; 
-&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc5-2.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;删除无用的变量，或者是import，或者是局部变量
-&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc6.png&quot; alt=&quot;&quot; /&gt;&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc6-2.png&quot; alt=&quot;&quot; /&gt;&lt;img src=&quot;http://cdn.jasonsoso.com/2016/sc6-3.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;一律用大括号括住 if 和 loop 语句
-if else 建议写上{}，个人习惯比较清晰和安全。
-&lt;img src=&quot;http://cdn.jasonsoso.com/%40%2F2016%2Fsc7.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;注释几点说明：
-    &lt;ol&gt;
-      &lt;li&gt;内容要简单、明了、含义准确，防止注释的多义性。&lt;/li&gt;
-      &lt;li&gt;注释的就近原则。对代码的注释应放在其上方相邻或右方的位置，不可放在下方。&lt;/li&gt;
-      &lt;li&gt;面向接口，接口注释采用 /** …… */，在接口注释清楚的前提下对应的实现类可以不加注释。&lt;/li&gt;
-      &lt;li&gt;如果方法名称，简单易懂，可以不加注释，方法名称最好能让人通俗易懂。尽量用方法名就能说明你的意义，因为维护注释也需要很大的成本.。&lt;/li&gt;
-      &lt;li&gt;常量：常量通常具有一定的实际意义，要定义相应说明。&lt;/li&gt;
-      &lt;li&gt;一个方法多次改动，也请维护你的注释。&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-  &lt;li&gt;SVN几点操作说明
-    &lt;ol&gt;
-      &lt;li&gt;在修改代码先，先update。&lt;/li&gt;
-      &lt;li&gt;修改后，先测试无BUG，再update，没冲突，再COMMINT。&lt;/li&gt;
-      &lt;li&gt;在COMMINT前， 想看是否是自己想提交的代码，可资源对比，是与服务器上代码比较。&lt;/li&gt;
-      &lt;li&gt;在每提交代码时，加上注解再提交。&lt;/li&gt;
-    &lt;/ol&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-</description>
-        <pubDate>Fri, 15 Apr 2016 00:00:00 +0800</pubDate>
-        <link>http://localhost:4000/2016/04/static-code/</link>
-        <guid isPermaLink="true">http://localhost:4000/2016/04/static-code/</guid>
-        
-        <category>代码审核</category>
-        
-        
-      </item>
-    
-      <item>
         <title>单点登录(SSO)概要设计</title>
-        <description>&lt;h2 id=&quot;第一章--单点登录sso&quot;&gt;第一章	： 单点登录(SSO)&lt;/h2&gt;
+        <description>&lt;h3 id=&quot;第一章--单点登录sso&quot;&gt;第一章	： 单点登录(SSO)&lt;/h3&gt;
 
 &lt;h4 id=&quot;sso诞生的目标&quot;&gt;SSO诞生的目标&lt;/h4&gt;
 &lt;ol&gt;
@@ -123,7 +52,7 @@ if else 建议写上{}，个人习惯比较清晰和安全。
 &lt;img src=&quot;http://cdn.jasonsoso.com//2016/sso2.png&quot; alt=&quot;基本原理&quot; title=&quot;基本原理&quot; /&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;第二章--sso的实现--cas&quot;&gt;第二章 ： SSO的实现 –– CAS##&lt;/h2&gt;
+&lt;h3 id=&quot;第二章--sso的实现--cas&quot;&gt;第二章 ： SSO的实现 –– CAS###&lt;/h3&gt;
 
 &lt;h4 id=&quot;cas简介&quot;&gt;CAS简介&lt;/h4&gt;
 &lt;p&gt;CAS 是 Yale 大学发起的一个开源项目，旨在为 Web 应用系统提供一种可靠的单点登录方法，CAS 在 2004 年 12 月正式成为 JA-SIG 的一个项目。&lt;/p&gt;
@@ -164,7 +93,7 @@ if else 建议写上{}，个人习惯比较清晰和安全。
 
 &lt;p&gt;注意：以上操作一个系统登录，则其他所有系统均可以访问，如果一个系统进行退出，则其他所有系统均已退出&lt;/p&gt;
 
-&lt;h2 id=&quot;第三章-账户中心&quot;&gt;第三章	：账户中心&lt;/h2&gt;
+&lt;h3 id=&quot;第三章-账户中心&quot;&gt;第三章	：账户中心&lt;/h3&gt;
 
 &lt;h4 id=&quot;账户信息管理&quot;&gt;账户信息管理&lt;/h4&gt;
 
@@ -196,7 +125,7 @@ if else 建议写上{}，个人习惯比较清晰和安全。
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;第四章技术选型&quot;&gt;第四章：技术选型&lt;/h2&gt;
+&lt;h3 id=&quot;第四章技术选型&quot;&gt;第四章：技术选型&lt;/h3&gt;
 
 &lt;h4 id=&quot;单点登录sso的实现--cas&quot;&gt;单点登录SSO的实现 – CAS&lt;/h4&gt;
 
@@ -229,10 +158,6 @@ OAuth 2.0官网：http://oauth.net/2/
         
         <category>架构</category>
         
-        <category>CAS</category>
-        
-        <category>Shiro</category>
-        
         <category>SSO</category>
         
         
@@ -240,7 +165,7 @@ OAuth 2.0官网：http://oauth.net/2/
     
       <item>
         <title>搜索引擎ElasticSearch</title>
-        <description>&lt;h2 id=&quot;第一章-搜索引擎&quot;&gt;第一章	搜索引擎&lt;/h2&gt;
+        <description>&lt;h3 id=&quot;第一章-搜索引擎&quot;&gt;第一章	搜索引擎&lt;/h3&gt;
 
 &lt;h4 id=&quot;搜索引擎简单结构&quot;&gt;搜索引擎简单结构&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;http://cdn.jasonsoso.com/2015/index.png&quot; alt=&quot;搜索引擎简单结构&quot; /&gt;&lt;/p&gt;
@@ -322,7 +247,7 @@ Lucene是一套用于全文检索和搜寻的开源程式库，由Apache软件�
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;h2 id=&quot;第二章-elasticsearch简介&quot;&gt;第二章	Elasticsearch简介&lt;/h2&gt;
+&lt;h3 id=&quot;第二章-elasticsearch简介&quot;&gt;第二章	Elasticsearch简介&lt;/h3&gt;
 
 &lt;h4 id=&quot;简介&quot;&gt;简介&lt;/h4&gt;
 
@@ -399,7 +324,7 @@ node会使用广播（或指定的多播）来发现一个现有的cluster，并
 参照http://solr-vs-elasticsearch.com/&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;第三章-elasticsearch使用与说明&quot;&gt;第三章	ElasticSearch使用与说明&lt;/h2&gt;
+&lt;h3 id=&quot;第三章-elasticsearch使用与说明&quot;&gt;第三章	ElasticSearch使用与说明&lt;/h3&gt;
 
 &lt;h4 id=&quot;elasticsearch相关知识网站&quot;&gt;ElasticSearch相关知识网站&lt;/h4&gt;
 
@@ -419,7 +344,7 @@ http://log.medcl.net/&lt;/li&gt;
 &lt;h4 id=&quot;elasticsearch部署架构图&quot;&gt;ElasticSearch部署架构图&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&quot;http://cdn.jasonsoso.com/2015/e3.png&quot; alt=&quot;es部署架构图&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;第四章-elasticsearch部署&quot;&gt;第四章	ElasticSearch部署&lt;/h2&gt;
+&lt;h3 id=&quot;第四章-elasticsearch部署&quot;&gt;第四章	ElasticSearch部署&lt;/h3&gt;
 
 &lt;h4 id=&quot;linux启动&quot;&gt;Linux启动&lt;/h4&gt;
 
@@ -454,7 +379,7 @@ elasticsearch.bat
     
       <item>
         <title>Hadoop学习（一）Hadoop2.6.0伪分布式安装与配置</title>
-        <description>&lt;h2 id=&quot;环境&quot;&gt;环境&lt;/h2&gt;
+        <description>&lt;h3 id=&quot;环境&quot;&gt;环境&lt;/h3&gt;
 
 &lt;h4 id=&quot;准备ubuntu-1404-lts--并更新apt&quot;&gt;准备Ubuntu 14.04 LTS  并更新apt&lt;/h4&gt;
 
@@ -550,7 +475,7 @@ elasticsearch.bat
   &lt;li&gt;如果做集群，则配置SSH无密码登陆，实现多机器互通&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;hadoop260安装&quot;&gt;hadoop2.6.0安装&lt;/h2&gt;
+&lt;h3 id=&quot;hadoop260安装&quot;&gt;hadoop2.6.0安装&lt;/h3&gt;
 &lt;ol&gt;
   &lt;li&gt;下载hadoop2.6.0	
  官网hadoop下载http://hadoop.apache.org/releases.html&lt;/li&gt;
@@ -561,7 +486,7 @@ elasticsearch.bat
  &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo chown -R hadoop:hadoop ./hadoop-2.6.0&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;配置&quot;&gt;配置&lt;/h2&gt;
+&lt;h3 id=&quot;配置&quot;&gt;配置&lt;/h3&gt;
 &lt;ol&gt;
   &lt;li&gt;配置环境变量	
 下面&lt;code class=&quot;highlighter-rouge&quot;&gt;#set Hadoop&lt;/code&gt;才是真正的hadoop配置，而&lt;code class=&quot;highlighter-rouge&quot;&gt;#set java environment&lt;/code&gt;是必须的java环境变量，&lt;code class=&quot;highlighter-rouge&quot;&gt;#set findbugs&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;#set ant&lt;/code&gt;、&lt;code class=&quot;highlighter-rouge&quot;&gt;#PROTOBUF&lt;/code&gt;和&lt;code class=&quot;highlighter-rouge&quot;&gt;#set maven environment&lt;/code&gt;是编译hadoop代码必须的，现在没有编译hadoop源码，只需要java环境和hadoop环境足矣。&lt;/li&gt;
@@ -676,7 +601,7 @@ elasticsearch.bat
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;启动&quot;&gt;启动&lt;/h2&gt;
+&lt;h3 id=&quot;启动&quot;&gt;启动&lt;/h3&gt;
 &lt;ol&gt;
   &lt;li&gt;
     &lt;p&gt;启动HDFS(NameNode、DataNode、SecondaryNameNode)&lt;/p&gt;
@@ -724,7 +649,7 @@ elasticsearch.bat
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;实例与测试&quot;&gt;实例与测试&lt;/h2&gt;
+&lt;h3 id=&quot;实例与测试&quot;&gt;实例与测试&lt;/h3&gt;
 
 &lt;p&gt;启动后，用命令&lt;code class=&quot;highlighter-rouge&quot;&gt;jps&lt;/code&gt;检查是否启动&lt;/p&gt;
 
@@ -738,7 +663,7 @@ elasticsearch.bat
 
 &lt;p&gt;&lt;img src=&quot;http://cdn.jasonsoso.com/2015/50090.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;本文配置主要是为伪布式那么hadoop-集群的安装配置大致为如下&quot;&gt;本文配置主要是为伪布式，那么Hadoop 集群的安装配置大致为如下:&lt;/h2&gt;
+&lt;h3 id=&quot;本文配置主要是为伪布式那么hadoop-集群的安装配置大致为如下&quot;&gt;本文配置主要是为伪布式，那么Hadoop 集群的安装配置大致为如下:&lt;/h3&gt;
 
 &lt;ol&gt;
   &lt;li&gt;选定一台机器作为 Master 主节点&lt;/li&gt;
@@ -899,14 +824,14 @@ elasticsearch.bat
         <link>http://localhost:4000/2015/02/design-1/</link>
         <guid isPermaLink="true">http://localhost:4000/2015/02/design-1/</guid>
         
-        <category>框架设计</category>
+        <category>框架</category>
         
         
       </item>
     
       <item>
         <title>Gitbook（一）：从github到kindle</title>
-        <description>&lt;h2 id=&quot;简说&quot;&gt;简说&lt;/h2&gt;
+        <description>&lt;h3 id=&quot;简说&quot;&gt;简说&lt;/h3&gt;
 
 &lt;p&gt;&lt;a href=&quot;https://www.gitbook.io/&quot;&gt;gitbook&lt;/a&gt;是一个用于发布书籍的平台。&lt;/p&gt;
 
@@ -923,7 +848,7 @@ elasticsearch.bat
   &lt;li&gt;可以快速转制各种格式流通的电子书格式：PDF, ePub, mobi（Amazon专属格式），或者也可以生成一个线上阅读网站；&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;安装&quot;&gt;安装&lt;/h2&gt;
+&lt;h3 id=&quot;安装&quot;&gt;安装&lt;/h3&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
@@ -947,11 +872,11 @@ init [source_dir]   通过SUMMARY.md生成作品目录&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://cdn.jasonsoso.com/2015/gitbook2.png&quot; alt=&quot;gitbook&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;书写&quot;&gt;书写&lt;/h2&gt;
+&lt;h3 id=&quot;书写&quot;&gt;书写&lt;/h3&gt;
 
 &lt;p&gt;我暂时没有书写，我现在只是拿来主义&lt;/p&gt;
 
-&lt;h2 id=&quot;发布&quot;&gt;发布&lt;/h2&gt;
+&lt;h3 id=&quot;发布&quot;&gt;发布&lt;/h3&gt;
 
 &lt;ol&gt;
   &lt;li&gt;
@@ -969,7 +894,7 @@ Gitbook会使用其中的ebook-convert功能组件来完成书籍格式的转换
   &lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;拿来主义&quot;&gt;拿来主义&lt;/h2&gt;
+&lt;h3 id=&quot;拿来主义&quot;&gt;拿来主义&lt;/h3&gt;
 
 &lt;p&gt;因为gitbook上的书太好了，我想用kindle看，我看中了这本书《Elasticsearch权威指南中文版》&lt;/p&gt;
 
@@ -999,7 +924,7 @@ Gitbook会使用其中的ebook-convert功能组件来完成书籍格式的转换
     
       <item>
         <title>B树索引与位图索引</title>
-        <description>&lt;h2 id=&quot;简说&quot;&gt;简说&lt;/h2&gt;
+        <description>&lt;h3 id=&quot;简说&quot;&gt;简说&lt;/h3&gt;
 
 &lt;p&gt;在理解索引时，可以想象一本书，其中书的内容就相当于表里的数据，而书前面的目录就相当于该表的索引。
 同时，通常情况下，索引所占用的磁盘空间要比表要小得多，其主要作用是为了加快对数据的搜索速度，也可以用来保证数据的唯一性。
@@ -1009,7 +934,7 @@ Gitbook会使用其中的ebook-convert功能组件来完成书籍格式的转换
 
 &lt;p&gt;从物理上说，索引通常可以分为：常规B树索引、位图（bitmap）索引、翻转（reverse）索引等等…&lt;/p&gt;
 
-&lt;h2 id=&quot;b树索引&quot;&gt;B树索引&lt;/h2&gt;
+&lt;h3 id=&quot;b树索引&quot;&gt;B树索引&lt;/h3&gt;
 
 &lt;p&gt;即二叉搜索树，也是一种树状数据结构；	
 大量的数据库（如MySQL、oracle、PostgreSQL等）都在使用B树。B树索引本质上是对索引字段进行排序，然后通过类似二分查找的方法进行快速查找，即它要求索引的字段是可排序的，一般而言，可排序的是一维字段，比如时间、身份证号码  手机号码、QQ等等。&lt;/p&gt;
@@ -1024,7 +949,7 @@ Gitbook会使用其中的ebook-convert功能组件来完成书籍格式的转换
   &lt;li&gt;前导模糊查询不能利用索引(like ‘%XX’或者like ‘%XX%’)&lt;/li&gt;
 &lt;/ol&gt;
 
-&lt;h2 id=&quot;位图索引&quot;&gt;位图索引&lt;/h2&gt;
+&lt;h3 id=&quot;位图索引&quot;&gt;位图索引&lt;/h3&gt;
 
 &lt;p&gt;我们知道计算机所有信息最终都是通过“位bit”来运算的，二进制位运算在计算机中非常高效。而位图索引也是用0或1来处理索引进程，故得名位图索引。
 位图索引主要针对大量相同值的列而创建的，索引块的一个索引行中存储键值、起止RowId及此键值的位图，根据位图信息可以得知每一条记录的ROWID。它为列的每个键值建立位图，位图中的每一位可能对应多个列，位图中位的值为1表示此行的值为对应的键值。&lt;/p&gt;

@@ -1,12 +1,12 @@
 # Basic
-title: 潘柏信
-subtitle: 个人站
-description: 欢迎来到我的个人站~
+title: Jason
+subtitle: 技术流水账
+description: 欢迎来到我的技术流水账~
 # 头像里面的标题
-avatarTitle: leopardpan
+avatarTitle: Jason
 # 头像里面的描述
-avatarDesc: iOS / 机器学习
-url: "http://baixin.io"
+avatarDesc: Java
+url: "http://tech.jasonsoso.com"
 
 # Comment
 comment:
@@ -16,13 +16,13 @@ comment:
 
 # Social
 social:
-    weibo: 5366874726 
-    github: leopardpan
+    weibo: tanjianna 
+    github: jasonsoso
     # zhihu: panpanleopard
     # juejin: xxx
-    jianshu: 2ada30d8d0f7
+    # jianshu: 2ada30d8d0f7
     # twitter: 
-    mail: leopardpan@icloud.com
+    mail: 648636045@qq.com
 
 
 # 百度统计 
@@ -64,7 +64,7 @@ blog_button:
 nav:
     - {title: 所有文章, description: archive, url: '/archive'}   
     - {title: 标签, description: tags, url: '/tags'}      
-    - {title: 关于我, description: about, url: '/about'}      
+    - {title: 关于我, description: about, url: 'http://www.jasonsoso.com/'}      
     
 
 # Pagination
